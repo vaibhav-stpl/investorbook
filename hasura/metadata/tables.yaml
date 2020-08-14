@@ -1,0 +1,9 @@
+- table:
+    schema: public
+    name: company
+- table:
+    schema: public
+    name: investment
+- table:
+    schema: public
+    name: investor
