@@ -8,23 +8,23 @@ Investors, Companies, and Investments.
 
 You met with the CEO and promised to deliver a clean, fast UI for working with
 the data -- in just four hours! The simplest option is to provide a basic CRUD
-interface for the three tables, but you have free reign to go beyond the basic
-requirement to show off your creativity and frontend wizardry.
+interface for the three tables, but if that looks too easy, the advanced version
+is to build a spreadsheet-style interface.
 
-### Basic Reqirement
+### Basic Version
 
 Build a simple CRUD interface that lets you add, view, edit, and delete records
 in the three tables.
 
-### Just one more thing...
+### Advanced Version
 
-If the basic requirement looks easy, you can take it further! For example, you
-could build a spreadsheet CRUD interface (similar to Google Sheets or Airtable)
-that includes useful features like infinite scroll, collaborative editing (you
-can try using Hasura Subscriptions for this), filtering, sort, search, the
-ability to copy paste from another spreadsheet, etc. Most likely not _all_ of
-those in 4 hours, but hopefully that gives you some inspiration. Feel free to
-use any open source packages that you'd like to pull in.
+Build a spreadsheet CRUD interface (similar to Google Sheets or Airtable) that
+includes useful features like infinite scroll, collaborative editing (you can
+try using Hasura Subscriptions for this), filtering, sort, search, the ability
+to copy paste from another spreadsheet, etc. Use your own discretion to decide
+which features to build in the allotted time. You can use any open source
+packages that you'd like to pull in. This is a lot to build in four hours, so
+it's reasonable to cut corners and focus on building a rough prototype.
 
 ## Tables
 
@@ -46,11 +46,3 @@ use any open source packages that you'd like to pull in.
 
 You can use a GraphQL client library like apollo-client to connect to the
 provided Hasura server, which adds a GraphQL API on top of PostgreSQL.
-
-## Evaluation Criteria
-
-- Clean, modular, easy-to-maintain code
-- Test coverage
-  - Bonus points for tests that are short, fast, and reliable but offer an
-    unexpectedly high ROI in terms of coverage.
-- Performance - Every user interaction should feel fast.

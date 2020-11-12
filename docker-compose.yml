@@ -1,5 +1,5 @@
 # docker-compose.yml
-version: '3.7'
+version: "3.7"
 services:
   postgres:
     image: postgres:11
@@ -23,3 +23,13 @@ services:
       - ./hasura/migrations:/hasura-migrations
       - ./hasura/metadata:/hasura-metadata
     restart: always
+  webclient:
+    build: ./webclient
+    ports:
+      - 3000:3000
+    volumes:
+      - ./webclient/src:/app/src
+      - ./webclient/public:/app/public
+    environment:
+      - NODE_ENV=development
+    tty: true
