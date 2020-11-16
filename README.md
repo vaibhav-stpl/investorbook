@@ -5,6 +5,6 @@ can integrate it to run with `docker-compose up` or include a brief README with
 instructions for running it locally.
 
 Feel free to access the data directly in Postgres
-(postgresql://postgres:postgres@postgres:5432/postgres) or through the Hasura
+(postgresql://postgres:postgres@postgres:5433/postgres) or through the Hasura
 GraphQL API. You can access the Hasura Console by installing the Hasura CLI
 locally and running `hasura console` in the `./hasura` subdirectory.

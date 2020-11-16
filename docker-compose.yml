@@ -4,7 +4,7 @@ services:
   postgres:
     image: postgres:11
     ports:
-      - 5432:5432
+      - 5433:5432
     volumes:
       - ./db/sampledata.sql:/docker-entrypoint-initdb.d/1-init.sql
     environment:
@@ -18,7 +18,7 @@ services:
       - HASURA_GRAPHQL_ENABLE_CONSOLE=true
       - HASURA_GRAPHQL_LOG_LEVEL=warn
     ports:
-      - 8080:8080
+      - 8091:8080
     volumes:
       - ./hasura/migrations:/hasura-migrations
       - ./hasura/metadata:/hasura-metadata
@@ -26,7 +26,7 @@ services:
   webclient:
     build: ./webclient
     ports:
-      - 3000:3000
+      - 3001:3000
     volumes:
       - ./webclient/src:/app/src
       - ./webclient/public:/app/public
