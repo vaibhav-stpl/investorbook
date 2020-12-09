@@ -19,6 +19,13 @@ to add, view, edit, and delete records in the three tables.
 
 ![screenshot](investorbook.png)
 
+### Deliverables
+Send us a link to a hosted version of your app. Choose a few parts of the design for focus rather than trying to do everything. Write at least one mutation. You will be evaluated by: 
+1. Code quality
+2. Closeness to the design 
+
+When submitting your app, share with us what you did well and what you would spend more time on polishing. 
+
 ### Advanced Version
 
 Build a spreadsheet CRUD interface (similar to Google Sheets or Airtable) that
