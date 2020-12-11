@@ -20,11 +20,16 @@ to add, view, edit, and delete records in the three tables.
 ![screenshot](investorbook.png)
 
 ### Deliverables
-Send us a link to a hosted version of your app. Choose a few parts of the design for focus rather than trying to do everything. Write at least one mutation. You will be evaluated by: 
-1. Code quality
-2. Closeness to the design 
 
-When submitting your app, share with us what you did well and what you would spend more time on polishing. 
+Send us a link to a hosted version of your app. Choose a few parts of the design
+for focus rather than trying to do everything. Write at least one mutation. You
+will be evaluated by:
+
+1. Code quality
+2. Closeness to the design
+
+When submitting your app, share with us what you did well and what you would
+spend more time on polishing.
 
 ### Advanced Version
 
@@ -61,3 +66,14 @@ Fork this repository and send us a link to your fork after pushing your changes.
 
 You can use a GraphQL client library like apollo-client to connect to the
 provided Hasura server, which adds a GraphQL API on top of PostgreSQL.
+
+## Evaluation Criteria
+
+You will be evaluated on:
+
+1. Features working properly
+1. Code quality
+1. Closeness to the design
+
+Please make it clear what is finished and polished versus what is a WIP or not
+implemented.
