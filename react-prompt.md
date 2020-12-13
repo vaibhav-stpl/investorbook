@@ -19,17 +19,14 @@ to add, view, edit, and delete records in the three tables.
 
 ![screenshot](investorbook.png)
 
-### Deliverables
+### Requirements
 
-Send us a link to a hosted version of your app. Choose a few parts of the design
-for focus rather than trying to do everything. Write at least one mutation. You
+Choose a few parts of the design for focus rather than trying to do everything. You
 will be evaluated by:
 
 1. Code quality
 2. Closeness to the design
-
-When submitting your app, share with us what you did well and what you would
-spend more time on polishing.
+3. Write at least one mutation. 
 
 ### Advanced Version
 
@@ -44,7 +41,10 @@ focus on building a rough prototype.
 
 ## Submission
 
-Fork this repository and send us a link to your fork after pushing your changes.
+1. Fork this repository and send us a link to your fork after pushing your changes. 
+2. Host your solution - send us a link to the live app
+3. Share with us what you did well and what you would
+spend more time on polishing.
 
 ## Tables
 
