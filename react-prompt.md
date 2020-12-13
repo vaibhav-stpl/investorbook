@@ -30,13 +30,6 @@ packages that you'd like to pull in, including existing spreadsheet libraries.
 This is a lot to build in four hours, so it's reasonable to cut corners and
 focus on building a rough prototype.
 
-## Submission
-
-1. Fork this repository and send us a link to your fork after pushing your changes. 
-2. Host your solution - send us a link to the live app
-3. Share with us what you did well and what you would
-spend more time on polishing.
-
 ## Tables
 
 - Investors
@@ -68,3 +61,10 @@ You will be evaluated on:
 
 Please make it clear what is finished and polished versus what is a WIP or not
 implemented.
+
+## Submission
+
+1. Fork this repository and send us a link to your fork after pushing your changes. 
+2. Host your solution - send us a link to the live app
+3. Share with us what you did well and what you would
+spend more time on polishing. 
