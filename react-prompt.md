@@ -19,15 +19,6 @@ to add, view, edit, and delete records in the three tables.
 
 ![screenshot](investorbook.png)
 
-### Requirements
-
-Choose a few parts of the design for focus rather than trying to do everything. You
-will be evaluated by:
-
-1. Code quality
-2. Closeness to the design
-3. Write at least one mutation. 
-
 ### Advanced Version
 
 Build a spreadsheet CRUD interface (similar to Google Sheets or Airtable) that
@@ -71,9 +62,9 @@ provided Hasura server, which adds a GraphQL API on top of PostgreSQL.
 
 You will be evaluated on:
 
-1. Features working properly
-1. Code quality
-1. Closeness to the design
+1. Features working properly - the solution should include at least one mutation.
+2. Code quality
+3. Closeness to the design
 
 Please make it clear what is finished and polished versus what is a WIP or not
 implemented.
