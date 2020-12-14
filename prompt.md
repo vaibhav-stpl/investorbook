@@ -36,7 +36,9 @@ four hours:
 
 ## Submission
 
-Fork this repository and send us a link to your fork after pushing your changes.
+Fork this repository and send us a link to your fork after pushing your changes. In your submission, answer the following: 
+1. What did your do well on the prompt? 
+2. How would you improve the submission if you had more time? 
 
 ## Evaluation Criteria
 
