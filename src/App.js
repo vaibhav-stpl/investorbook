@@ -1,12 +1,17 @@
 import React from 'react';
 import './App.css';
-import Investors from './Investors'
+import Investor from './components/Investors/show'
+import Home from './components/'
+import { Switch, Route , BrowserRouter as Router} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <Investors />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={ Home } ></Route>
+        <Route  exact path="/investors/:id" component={ Investor } ></Route>
+      </Switch>
+    </Router>
   );
 }
 

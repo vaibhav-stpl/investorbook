@@ -8,6 +8,8 @@ const GET_INVESTORS = gql`
       investor(limit: 100) {
           id
           name
+          photo_large
+          photo_thumbnail
       }
   }
 `;
