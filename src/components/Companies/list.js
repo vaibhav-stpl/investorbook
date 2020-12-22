@@ -1,39 +1,44 @@
-import React from 'react'
+import React , {useState, useEffect} from 'react'
 import { useQuery, gql } from '@apollo/client';
-import Investments from './getInvestments'
+import Investors from './getInvestors'
 // Example of a component that uses apollo-client to fetch data.
 
 const GET_INVESTORS = gql`
-  query GetCompanies {
-      investor(limit: 10) {
+  query GetCompanies($offset: Int!, $limit: Int!)  {
+      company(limit: $limit, offset: $offset, order_by: {created_at: asc}) {
           id
           name
-          photo_large
-          photo_thumbnail
       }
   }
 `;
 
-const Companies = (props) =>{
+const CompaniesList = (props) =>{
   const { loading, error, data } = useQuery(GET_INVESTORS);
+  const [companies, setCompanies ] = useState([])
+  useEffect(() => {
+    if (data) {
+      setCompanies(data.comany)
+    }
+  },[data])
+
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-  if (data.investor.length === 0) return <p>The database is empty!</p>
+  if (companies.length === 0) return <p>The database is empty!</p>
   console.log(data)
 
   return(
     <table >
       <tr>
         <th>Name</th>
-        <th>Investments</th>
+        <th>Investors</th>
       </tr>
       {
-      data.investor.map(({ id, name, photo_thumbnail }) => (
+      companies.map(({ id, name, photo_thumbnail }) => (
 
         <tr  key={id}>
-        <td><img src={photo_thumbnail} alt={id} /></td>
         <td>{name}</td>
-        <td><Investments id={ id }/></td>
+        <td><Investors id={ id }/></td>
       </tr>
       ))
       }
@@ -46,4 +51,4 @@ const Companies = (props) =>{
   
 }
 
-export default Companies;
+export default CompaniesList;

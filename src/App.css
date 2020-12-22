@@ -41,3 +41,15 @@
 .show{
   display: contents !important;
 }
+.investor-action{
+  float: right;
+}
+h3 span{
+  color: rgb(54, 130, 201);
+}
+.nav-link.active {
+  color: rgb(54, 130, 201) !important;
+}
+.nav-link {
+  color: black;
+}

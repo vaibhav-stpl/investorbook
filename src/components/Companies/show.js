@@ -3,21 +3,14 @@ import { useQuery, gql , useMutation} from '@apollo/client';
 import { withRouter } from "react-router";
 import Investments from '../Investments/list'
 import Modal from 'react-bootstrap-modal';
-import Select from "react-dropdown-select";
 import { ToastContainer } from "react-toastr";
 // Example of a component that uses apollo-client to fetch data.
 
-const GET_INVESTOR = gql`
-  query GetInvestor($id: Int!) {
-    investor_by_pk(id: $id) {
+const GET_COMPANY = gql`
+  query GetCompany($id: Int!) {
+    company_by_pk(id: $id) {
           id
           name
-          photo_large
-          photo_thumbnail
-    }
-    company(limit: 100){
-        id
-        name
     }
   }
 `;
@@ -46,40 +39,39 @@ const DELETE_INVESTMENT = gql`
   }
 `;
 
-const UPDATE_INVESTOR = gql`
-  mutation UpdateInvestor($id: Int!, $name: String!) {
-    update_investor_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {
+const UPDATE_COMPANY = gql`
+  mutation UpdateCompany($id: Int!, $name: String!) {
+    update_company_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {
       id
     }
   }
 `;
 
-const DELETE_INVESTOR = gql`
-  mutation DeleteInvestor($id: Int!) {
-    delete_investor_by_pk(id: $id) {
+const DELETE_COMPANY = gql`
+  mutation DeleteCompany($id: Int!) {
+    delete_company_by_pk(id: $id) {
       id
     }
   }
 `;
-const Investor = (props) =>{
+const Company = (props) =>{
     const [openModal, setOpenModal] = useState(false)
-    const [ companyId, setCompany] = useState(null)
     const [ amount, setAmount] = useState(null)
     const [editData, setEditData ] = useState({})
     const [editable, setEditable ] = useState(false)
     const [insert_investment_one, addInvestment ] = useMutation(ADD_INVESTMENT);
     const [update_investment_by_pk, UpdateInvestment ] = useMutation(UPDATE_INVESTMENT);
-    const [update_investor_by_pk] = useMutation(UPDATE_INVESTOR)
+    const [update_company_by_pk] = useMutation(UPDATE_COMPANY)
     const [delete_investment_by_pk ] = useMutation(DELETE_INVESTMENT);
-    const [delete_investor_by_pk ] = useMutation(DELETE_INVESTOR);
+    const [delete_company_by_pk ] = useMutation(DELETE_COMPANY);
 
 
     const id =  props.history.location.pathname.split('/')[2]
     const toastr = useRef();
-    const investor_name = useRef();
+    const company_name = useRef();
 
 
-    const { loading, error, data } = useQuery(GET_INVESTOR, {
+    const { loading, error, data } = useQuery(GET_COMPANY, {
         variables: { id: parseInt(id) }
     });
     
@@ -106,7 +98,7 @@ const Investor = (props) =>{
         if(editData.id){
           updateData(event)
         }else{
-          insert_investment_one({ variables: { amount: parseFloat(amount), company_id: companyId, investor_id: data.investor_by_pk.id } }).then((data)=>{
+          insert_investment_one({ variables: {amount: amount, company_id: data.company_by_pk.id } }).then((data)=>{
             closeModalFun()
             toastr.current.success('Successfully Created','Success')
             props.history.push(`/investors/${ id }`)
@@ -118,11 +110,10 @@ const Investor = (props) =>{
 
     const updateData = (event) =>{
       const amt = amount || editData.amount
-      const company_id = companyId || editData.company_id
-      update_investment_by_pk({variables: {id: editData.id, amount: amt, company_id: company_id}}).then((data)=>{
+      update_investment_by_pk({variables: {id: editData.id, amount: amt}}).then((data)=>{
         closeModalFun()
         toastr.current.success('Successfully Updated!','Success')
-        props.history.push(`/investors/${ id }`)
+        props.history.push(`/companies/${ id }`)
         props.history.go();
       }).catch((error)=>{
         toastr.current.error(error.message, 'Error')
@@ -137,7 +128,7 @@ const Investor = (props) =>{
     const handleDelete = (item) => {
       delete_investment_by_pk({variables: {id: item.id}}).then((data)=>{
         toastr.current.success('Successfully Deleted!','Success')
-        props.history.push(`/investors/${ id }`)
+        props.history.push(`/companies/${ id }`)
         props.history.go();
 
       }).catch((error)=>{
@@ -147,18 +138,18 @@ const Investor = (props) =>{
 
 
 
-  const updateInvestor = () => {
-    const name = investor_name.current.value
-    update_investor_by_pk({variables: {id: id, name: name}}).then((data)=>{
+  const updateCompany = () => {
+    const name = company_name.current.value
+    update_company_by_pk({variables: {id: id, name: name}}).then((data)=>{
       toastr.current.success('Successfully Updated!','Success')
-      props.history.push(`/investors/${ id }`)
+      props.history.push(`/companies/${ id }`)
       props.history.go();
     }).catch((error)=>{
       toastr.current.error(error.message, 'Error')
     })
   }
-  const deleteInvestor = () => {
-    delete_investor_by_pk({variables: {id: id}}).then((data)=>{
+  const deleteCompany = () => {
+    delete_company_by_pk({variables: {id: id}}).then((data)=>{
       toastr.current.success('Successfully Deleted!','Success')
       props.history.push(`/`)
       props.history.go();
@@ -167,7 +158,6 @@ const Investor = (props) =>{
     })
   }
     
-  const options = data.company.map((item) => ({label: item.name, value: item.id}))
   return(
    <div>
      <ToastContainer
@@ -176,17 +166,17 @@ const Investor = (props) =>{
         />
      <button onClick={ () => props.history.goBack()} >Back </button>
         <div className='heading'>
-          <p><img src={data.investor_by_pk.photo_thumbnail} alt={data.investor_by_pk.id} /> 
+          <p>
           {
             editable ? 
             <React.Fragment>
-              <input type='text' ref={investor_name} name='investor' defaultValue={ data.investor_by_pk.name } />
-              <button onClick={updateInvestor} >update</button>
+              <input type='text' ref={company_name} name='investor' defaultValue={ data.company_by_pk.name } />
+              <button onClick={updateCompany} >update</button>
             </React.Fragment> :
           data.investor_by_pk.name}</p>
           <div className='investor-action'>
             <button onClick={() => setEditable(true) }>Edit</button>
-            <button onClick={() => deleteInvestor() }>Delete</button>
+            <button onClick={() => deleteCompany() }>Delete</button>
           </div>
         </div>
         <button onClick={openModalFun}>Add Investments</button>
@@ -211,8 +201,7 @@ const Investor = (props) =>{
                 <h4>Add Investment</h4>
                 <h4>Please enter details of the investment</h4>
                 <form onSubmit={handleSubmit}>
-                <Select options={options} onChange={(values) => setCompany(values[0]?.value)} values={options.filter((item) => item?.value === editData.company_id)} />
-                    <input type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} />
+                    <input type='text' name='name' onChange={(event) => handleChange(event)} defaultValue={editData.name} />
                     <input type='button' onClick={closeModalFun} value='cancel'/>
                     <input type='submit' value='submit'/>
                 </form>
@@ -230,6 +219,6 @@ const Investor = (props) =>{
   
   
 }
-Investor.propTypes = {
+Company.propTypes = {
 };
-export default withRouter(Investor);
+export default withRouter(Company);
