@@ -1,25 +1,8 @@
 import React , {useState, useEffect} from 'react'
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import Investors from './getInvestors'
 import PropTypes from 'prop-types';
-
-
-const GET_COMPANIES = gql`
-  query GetCompanies($offset: Int!, $limit: Int!)  {
-      company(limit: $limit, offset: $offset, order_by: {created_at: asc}) {
-          id
-          name
-      }
-  }
-`;
-const GET_FILTERS = gql`
-  query GetCompanies($search: String!) {
-      company(where: {name: {_eq: $search}}, order_by: {created_at: asc}) {
-          id
-          name
-      }
-  }
-`;
+import { GET_COMPANIES , GET_FILTERS} from './constants'
 
 const CompaniesList = (props) =>{
   const {offset, limit,searchFilter } = props

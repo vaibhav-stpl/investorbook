@@ -4,25 +4,9 @@ import InvestorsList from './list'
 import Pagination from "react-js-pagination";
 import Modal from 'react-bootstrap-modal';
 import { ToastContainer } from "react-toastr";
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { ADD_INVESTOR } from './constants'
 
-
-// const GET_INVESTORS = gql`
-//   query GetInvestors {
-//       investor {
-//           id
-//       }
-//   }
-// `;
-const ADD_INVESTOR = gql`
-  mutation AddInvestor($name: String!, $photo_large: String!, $photo_thumbnail: String!) {
-    insert_investor_one(object: {name: $name,amount:  $photo_large, photo_thumbnail: $photo_thumbnail}) {
-      id
-      company_id
-      amount
-    }
-  }
-`;
 
 const Investors = (props) =>{
   const [activePage, setActivePage ] = useState(1)
@@ -36,10 +20,6 @@ const Investors = (props) =>{
   const toastr = useRef();
 
   const search_filter = useRef();
-
-  //const {loading, data } = useQuery(GET_INVESTORS);
-
-
  
   const handlePageChange = ( page) => {
     setActivePage(page)

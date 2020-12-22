@@ -1,22 +1,8 @@
 import React from 'react'
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { withRouter } from "react-router";
 import PropTypes from 'prop-types';
-
-// Example of a component that uses apollo-client to fetch data.
-
-const GET_INVESTMENTS_BY_INVESTOR = gql`
-  query GetInvestmentsByInvestorId($investor_id: Int!) {
-    investment( where: {investor_id: {_eq: $investor_id}}){
-        id
-        amount
-        company_id
-        company {
-            name
-        }
-    }
-  }
-`;
+import { GET_INVESTMENTS_BY_INVESTOR } from './constants'
 
 const Investments = (props) =>{
     const { id , onEdit, onDelete } = props

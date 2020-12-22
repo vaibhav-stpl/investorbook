@@ -3,28 +3,10 @@ import { withRouter } from "react-router";
 import CompaniesList from './list'
 import Pagination from "react-js-pagination";
 import { ToastContainer } from "react-toastr";
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Modal from 'react-bootstrap-modal';
+import { ADD_COMPANY } from './constants'
 
-// import { useQuery, gql } from '@apollo/client';
-
-
-// const GET_INVESTORS = gql`
-//   query GetInvestors {
-//       investor {
-//           id
-//       }
-//   }
-// `;
-const ADD_COMPANY = gql`
-  mutation AddCompany($name: String!) {
-    insert_company_one(object: {name: $name}) {
-      id
-      company_id
-      amount
-    }
-  }
-`;
 const Companies = (props) =>{
   const [activePage, setActivePage ] = useState(1)
   const [searchFilter, setSearchFilter ] = useState('')
@@ -35,7 +17,6 @@ const Companies = (props) =>{
   const [insert_company_one, addCompany ] = useMutation(ADD_COMPANY);
   const toastr = useRef();
   const limit = 10;
-  //const {loading, data } = useQuery(GET_INVESTORS);
 
 
  

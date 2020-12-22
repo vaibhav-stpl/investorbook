@@ -1,17 +1,7 @@
 import React from 'react'
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import PropTypes from 'prop-types';
-
-const GET_INVESTMENTS_BY_INVESTOR = gql`
-  query GetInvestmentsByInvestorId($investor_id: Int!) {
-    investment(limit: 5, where: {investor_id: {_eq: $investor_id}}){
-        id
-        company {
-            name
-        }
-    }
-  }
-`;
+import { GET_INVESTMENTS_BY_INVESTOR } from './constants'
 const Investments = (props) =>{
     const { id } = props
   const { loading, error, data } = useQuery(GET_INVESTMENTS_BY_INVESTOR, {

@@ -1,31 +1,13 @@
 import React , { useEffect , useState}from 'react'
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import Investments from './getInvestments'
 import { withRouter } from "react-router";
 import PropTypes from 'prop-types';
+import { GET_INVESTORS,GET_FILTERS } from './constants'
 
 // Example of a component that uses apollo-client to fetch data.
 
-const GET_INVESTORS = gql`
-  query GetInvestors($offset: Int!, $limit: Int!) {
-      investor(limit: $limit, offset: $offset, order_by: {created_at: asc}) {
-          id
-          name
-          photo_large
-          photo_thumbnail
-      }
-  }
-`;
-const GET_FILTERS = gql`
-  query GetInvestors($search: String!) {
-      investor(where: {name: {_eq: $search}}, order_by: {created_at: asc}) {
-          id
-          name
-          photo_large
-          photo_thumbnail
-      }
-  }
-`;
+
 const InvestorsList = (props) =>{
   const {offset, limit,searchFilter } = props
   const { loading, error, data } = useQuery(GET_INVESTORS,{ skip: searchFilter!=='' ,variables: {offset: offset, limit: limit}});
