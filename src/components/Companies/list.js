@@ -1,9 +1,10 @@
 import React , {useState, useEffect} from 'react'
 import { useQuery, gql } from '@apollo/client';
 import Investors from './getInvestors'
-// Example of a component that uses apollo-client to fetch data.
+import PropTypes from 'prop-types';
 
-const GET_INVESTORS = gql`
+
+const GET_COMPANIES = gql`
   query GetCompanies($offset: Int!, $limit: Int!)  {
       company(limit: $limit, offset: $offset, order_by: {created_at: asc}) {
           id
@@ -11,19 +12,29 @@ const GET_INVESTORS = gql`
       }
   }
 `;
+const GET_FILTERS = gql`
+  query GetCompanies($search: String!) {
+      company(where: {name: {_eq: $search}}, order_by: {created_at: asc}) {
+          id
+          name
+      }
+  }
+`;
 
 const CompaniesList = (props) =>{
-  const { loading, error, data } = useQuery(GET_INVESTORS);
+  const {offset, limit,searchFilter } = props
+  const { loading, error, data } = useQuery(GET_COMPANIES,{ skip: searchFilter!=='' ,variables: {offset: offset, limit: limit}});
+  const { loading: sloading, error: serror, data: sdata } = useQuery(GET_FILTERS,{skip: searchFilter==='',variables: {search: searchFilter}});
   const [companies, setCompanies ] = useState([])
   useEffect(() => {
     if (data) {
-      setCompanies(data.comany)
+      setCompanies(data.comany || sdata)
     }
-  },[data])
+  },[data, sdata])
 
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (loading || sloading) return <p>Loading...</p>;
+  if (error || serror) return <p>Error :(</p>;
   if (companies.length === 0) return <p>The database is empty!</p>
   console.log(data)
 
@@ -50,5 +61,11 @@ const CompaniesList = (props) =>{
   
   
 }
+CompaniesList.propTypes = {
+  offset: PropTypes.number,
+  limit: PropTypes.number,
+  searchFilter: PropTypes.string
+
+};
 
 export default CompaniesList;

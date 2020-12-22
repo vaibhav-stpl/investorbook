@@ -16,20 +16,31 @@ const GET_INVESTORS = gql`
       }
   }
 `;
-
+const GET_FILTERS = gql`
+  query GetInvestors($search: String!) {
+      investor(where: {name: {_eq: $search}}, order_by: {created_at: asc}) {
+          id
+          name
+          photo_large
+          photo_thumbnail
+      }
+  }
+`;
 const InvestorsList = (props) =>{
-  const {offset, limit } = props
-  const { loading, error, data } = useQuery(GET_INVESTORS,{variables: {offset: offset, limit: limit}});
+  const {offset, limit,searchFilter } = props
+  const { loading, error, data } = useQuery(GET_INVESTORS,{ skip: searchFilter!=='' ,variables: {offset: offset, limit: limit}});
+  const { loading: sloading, error: serror, data: sdata } = useQuery(GET_FILTERS,{skip: searchFilter==='',variables: {search: searchFilter}});
+
   const [investors, setInvestors ] = useState([])
   useEffect(() => {
-    if (data) {
-      setInvestors(data.investor)
+    if (data || sdata) {
+      setInvestors(data.investor || sdata.investor)
     }
-  },[data])
+  },[data, sdata])
 
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (loading || sloading) return <p>Loading...</p>;
+  if (error || serror) return <p>Error :(</p>;
   if (investors.length === 0) return <p>The database is empty!</p>
   
 
@@ -59,6 +70,7 @@ const InvestorsList = (props) =>{
 InvestorsList.propTypes = {
   offset: PropTypes.number,
   limit: PropTypes.number,
+  searchFilter: PropTypes.string
 
 };
 export default withRouter(InvestorsList);
