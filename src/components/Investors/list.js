@@ -23,7 +23,7 @@ const Investors = (props) =>{
   console.log(data)
 
   return(
-    <table className='investor-table' >
+    <table className='investor-table table' >
       <tr>
         <th>Name</th>
         <th>Investments</th>
@@ -46,5 +46,7 @@ const Investors = (props) =>{
   
   
 }
+Investors.propTypes = {
 
+};
 export default withRouter(Investors);

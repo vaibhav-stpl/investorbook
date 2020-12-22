@@ -1,5 +1,6 @@
 import React from 'react'
 import { useQuery, gql } from '@apollo/client';
+import PropTypes from 'prop-types';
 
 const GET_INVESTMENTS_BY_INVESTOR = gql`
   query GetInvestmentsByInvestorId($investor_id: Int!) {
@@ -28,5 +29,7 @@ if (error) return <p>error</p>;
       </span>
   ));
 }
-
+Investments.propTypes = {
+  id:  PropTypes.string,
+};
 export default Investments;
