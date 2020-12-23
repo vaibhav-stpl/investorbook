@@ -57,7 +57,7 @@ InvestorsList.propTypes = {
   offset: PropTypes.number,
   limit: PropTypes.number,
   searchFilter: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.number
 
 };
 export default withRouter(InvestorsList);

@@ -2,7 +2,7 @@ import React , { useState ,useRef }from 'react'
 import { withRouter } from "react-router";
 import InvestorsList from './list'
 import Pagination from "react-js-pagination";
-import Modal from 'react-bootstrap-modal';
+import { Modal } from 'react-bootstrap'
 import { ToastContainer } from "react-toastr";
 import { useMutation } from '@apollo/client';
 import { ADD_INVESTOR } from './constants'

@@ -20,6 +20,6 @@ if (error) return <p>error</p>;
   ));
 }
 Investments.propTypes = {
-  id:  PropTypes.string,
+  id:  PropTypes.number,
 };
 export default Investments;

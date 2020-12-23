@@ -2,7 +2,7 @@ import React, { useState , useRef} from 'react'
 import { useQuery , useMutation} from '@apollo/client';
 import { withRouter } from "react-router";
 import InvestmentsList from './investmentsList'
-import Modal from 'react-bootstrap-modal';
+import { Modal } from 'react-bootstrap'
 import Select from "react-dropdown-select";
 import { ToastContainer } from "react-toastr";
 import { ADD_INVESTMENT,UPDATE_INVESTMENT,GET_INVESTOR , UPDATE_INVESTOR ,DELETE_INVESTMENT, DELETE_INVESTOR} from './constants'
@@ -120,7 +120,7 @@ const Investor = (props) =>{
           className="toast-top-right"
           ref={toastr}
         />
-     <button onClick={ () => props.history.goBack()} >Back </button>
+     <button onClick={ () => props.history.push('/')} >Back </button>
         <div className='heading'>
           <p><img src={data.investor_by_pk.photo_thumbnail} alt={data.investor_by_pk.id} /> 
           {
@@ -137,7 +137,7 @@ const Investor = (props) =>{
         </div>
         <button onClick={openModalFun}>Add Investments</button>
         <InvestmentsList 
-          id={data.investor_by_pk.id.toString()} 
+          id={data.investor_by_pk.id} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
           addInvestment={addInvestment}
