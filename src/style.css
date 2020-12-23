@@ -1,0 +1,120 @@
+@font-face {
+    font-family: Agenda;
+    src: url(../../investorbook/src/fonts/agenda__.ttf);
+  }
+body{
+  
+}
+.main-wrapper {
+    padding: 35px 42px;
+}
+.logo {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 18px;
+    letter-spacing: 0.18em;
+    margin-bottom: 25px;
+}
+.tab-header {
+    display: flex;
+    font-size: 15px;
+    line-height: 14px;
+    font-weight: 500;
+    border-bottom: 1px solid #000;
+    margin-bottom: 20px;
+    /* font-family: "Agenda";   */
+}
+
+.search-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 27px;
+}
+.search-wrap{
+    position: relative;
+    width: calc(100% - 300px);
+}
+.search-wrap input,
+.search-wrap input:focus {
+    width:  100%;
+    position: relative;
+    border:  none;
+}
+
+.search {
+    background-color: transparent;
+    border: none;
+    font-size: 0;
+    background: url(/static/media/search-icon.e2c50766.svg);
+    width: 21px;
+    height: 21px;
+    bottom: auto;
+    top: 0;
+    margin: auto;
+    right: 0;
+    position: absolute;
+}
+.search-title {
+    width: 150px;
+    max-width: 100%;
+    margin: 0;
+}
+
+.search-investor,
+.search-investor:focus {
+    background: transparent;
+    color: #434FBC;
+    border: 1.4px solid #616DD7;
+    border-radius: 4px;    
+    padding: 0 10px;
+    margin-right: 20px;
+    text-transform: capitalize;
+}
+.round {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+}
+
+.table-img {
+    width:  70px;
+    max-width: 100%;
+}
+
+.table-name {
+    width: 200px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 13px;
+    max-width: 100%;
+}
+
+.table-desp {
+    width: calc(100% - 500px);
+    max-width: 100%;
+    word-break: break-all;
+}
+.table thead th {
+    border-top:0;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 11px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #797979;
+}
+.table td, .table th{
+    vertical-align: middle;
+}
+
+.pagination {
+    justify-content: flex-end;
+}
+.pagination li a {
+    color: #000;
+}
+.pagination li:first-child,
+.pagination li:last-child{
+    display: none;
+}
