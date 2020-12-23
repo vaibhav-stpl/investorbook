@@ -23,15 +23,19 @@ const Investments = (props) =>{
       <React.Fragment>
            <p>Total amount intersted {totalAmount}</p>
     <table className='investor-table table' >
+    <thead>
       <tr>
         <th>Name</th>
         <th>Amount</th>
         <th>Action</th>
       </tr>
+      </thead>
+      <tbody>
       {
+     
       data?.investment.map((item) => (
 
-        <tr  key={item.id}>
+        <tr key={item.id}>
         <td>{item.company.name}</td>
         <td>{item.amount}</td>
         <td> 
@@ -41,7 +45,7 @@ const Investments = (props) =>{
       </tr>
       ))
       }
-  
+      </tbody>
     </table></React.Fragment>
 
   )

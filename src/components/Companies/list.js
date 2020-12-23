@@ -24,20 +24,23 @@ const CompaniesList = (props) =>{
 
   return(
     <table >
-      <tr>
-        <th>Name</th>
-        <th>Investors</th>
-      </tr>
-      {
-      companies?.map(({ id, name }) => (
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Investors</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+        companies?.map(({ id, name }) => (
 
-        <tr key={id} onClick={ () => { props.history.push(`companies/${id}`)}}>
-        <td>{name}</td>
-        <td><Investors id={ id }/></td>
-      </tr>
-      ))
-      }
-  
+          <tr key={id} onClick={ () => { props.history.push(`companies/${id}`)}}>
+          <td>{name}</td>
+          <td><Investors id={ id }/></td>
+        </tr>
+        ))
+        }
+      </tbody>
     </table>
 
   )

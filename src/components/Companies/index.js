@@ -42,7 +42,6 @@ const Companies = (props) =>{
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    debugger
     insert_company_one({name: formData.name}).then((data)=>{
       closeModalFun()
       toastr.current.success('Successfully Created','Success')

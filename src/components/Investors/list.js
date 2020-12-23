@@ -27,20 +27,24 @@ const InvestorsList = (props) =>{
 
   return(
     <table className='investor-table table' >
+      <thead>
       <tr>
         <th>Name</th>
         <th>Investments</th>
       </tr>
+      </thead>
+      <tbody>
       {
       investors.map(({ id, name, photo_thumbnail }) => (
 
-        <tr  key={id} onClick={ () => { props.history.push(`investors/${id}`)}}>
+        <tr key={id} onClick={ () => { props.history.push(`investors/${id}`)}}>
         <td><img src={photo_thumbnail} alt={id} /></td>
         <td>{name}</td>
         <td><Investments id={ id }/></td>
       </tr>
       ))
       }
+      </tbody>
     </table>
 
   )
@@ -51,7 +55,8 @@ const InvestorsList = (props) =>{
 InvestorsList.propTypes = {
   offset: PropTypes.number,
   limit: PropTypes.number,
-  searchFilter: PropTypes.string
+  searchFilter: PropTypes.string,
+  id: PropTypes.string
 
 };
 export default withRouter(InvestorsList);

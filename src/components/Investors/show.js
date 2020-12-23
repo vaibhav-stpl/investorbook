@@ -137,7 +137,7 @@ const Investor = (props) =>{
         </div>
         <button onClick={openModalFun}>Add Investments</button>
         <Investments 
-          id={data.investor_by_pk.id} 
+          id={data.investor_by_pk.id.toString()} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
           addInvestment={addInvestment}
