@@ -54,7 +54,7 @@ const InvestorsList = (props) =>{
   
 }
 InvestorsList.propTypes = {
-  id:  PropTypes.string,
+  id:  PropTypes.number,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
 };

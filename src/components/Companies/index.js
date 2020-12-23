@@ -4,7 +4,7 @@ import CompaniesList from './list'
 import Pagination from "react-js-pagination";
 import { ToastContainer } from "react-toastr";
 import { useMutation } from '@apollo/client';
-import Modal from 'react-bootstrap-modal';
+import { Modal } from 'react-bootstrap'
 import { ADD_COMPANY } from './constants'
 
 const Companies = (props) =>{
