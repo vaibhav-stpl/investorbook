@@ -47,9 +47,15 @@
 h3 span{
   color: rgb(54, 130, 201);
 }
-.nav-link.active {
-  color: rgb(54, 130, 201) !important;
+.nav-link.active{
+  color: black;
+  border-bottom:3px solid black;
+}
+
+.nav-link:hover {
+  color: black;
 }
 .nav-link {
-  color: black;
+  color: #A0A0A0;
+  padding: 12px;
 }

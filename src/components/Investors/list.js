@@ -30,6 +30,7 @@ const InvestorsList = (props) =>{
       <thead>
       <tr>
         <th>Name</th>
+        <th></th>
         <th>Investments</th>
       </tr>
       </thead>
@@ -37,10 +38,10 @@ const InvestorsList = (props) =>{
       {
       investors.map(({ id, name, photo_thumbnail }) => (
 
-        <tr key={id} onClick={ () => { props.history.push(`investors/${id}`)}}>
-        <td><img src={photo_thumbnail} alt={id} /></td>
-        <td>{name}</td>
-        <td><Investments id={ id }/></td>
+      <tr class="table-row" key={id} onClick={ () => { props.history.push(`investors/${id}`)}}>
+        <td class="table-img"><img class="round" src={photo_thumbnail} alt={id} /></td>
+        <td class="table-name">{name}</td>
+        <td class="table-desp"><Investments id={ id }/></td>
       </tr>
       ))
       }
