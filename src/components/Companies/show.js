@@ -27,10 +27,10 @@ const Company = (props) =>{
     const { loading, error, data } = useQuery(GET_COMPANY, {
         variables: { id: parseInt(id) }
     });
-    
+ 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
-    if (!data.investor_by_pk) return <p>The database is empty!</p>
+    if (!data.company_by_pk) return <p>The database is empty!</p>
     console.log(data)
 
     const openModalFun = () => {
@@ -126,7 +126,7 @@ const Company = (props) =>{
               <input type='text' ref={company_name} name='investor' defaultValue={ data.company_by_pk.name } />
               <button onClick={updateCompany} >update</button>
             </React.Fragment> :
-          data.investor_by_pk.name}</p>
+          data.company_by_pk.name}</p>
           <div className='investor-action'>
             <button onClick={() => setEditable(true) }>Edit</button>
             <button onClick={() => deleteCompany() }>Delete</button>
@@ -134,7 +134,7 @@ const Company = (props) =>{
         </div>
         <button onClick={openModalFun}>Add Investments</button>
         <Investments 
-          id={data.investor_by_pk.id} 
+          id={data.company_by_pk.id} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
           addInvestment={addInvestment}

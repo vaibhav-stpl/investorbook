@@ -11,11 +11,9 @@ export const GET_INVESTMENTS_BY_INVESTOR = gql`
   }
 `;
 export const ADD_INVESTOR = gql`
-  mutation AddInvestor($name: String!, $photo_large: String!, $photo_thumbnail: String!) {
-    insert_investor_one(object: {name: $name,amount:  $photo_large, photo_thumbnail: $photo_thumbnail}) {
+  mutation AddInvestor($name: String, $photo_large: String, $photo_thumbnail: String) {
+    insert_investor_one(object: {name: $name,photo_large:  $photo_large, photo_thumbnail: $photo_thumbnail}) {
       id
-      company_id
-      amount
     }
   }
 `;
@@ -32,7 +30,7 @@ export const GET_INVESTORS = gql`
 `;
 export const GET_FILTERS = gql`
   query GetInvestors($search: String!) {
-      investor(where: {name: {_eq: $search}}, order_by: {created_at: asc}) {
+      investor(where: {name: {_like: $search}}, order_by: {created_at: asc}) {
           id
           name
           photo_large

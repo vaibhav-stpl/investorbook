@@ -12,11 +12,10 @@ const InvestorsList = (props) =>{
   const {offset, limit,searchFilter } = props
   const { loading, error, data } = useQuery(GET_INVESTORS,{ skip: searchFilter!=='' ,variables: {offset: offset, limit: limit}});
   const { loading: sloading, error: serror, data: sdata } = useQuery(GET_FILTERS,{skip: searchFilter==='',variables: {search: searchFilter}});
-
   const [investors, setInvestors ] = useState([])
   useEffect(() => {
     if (data || sdata) {
-      setInvestors(data.investor || sdata.investor)
+      setInvestors(data?.investor || sdata?.investor)
     }
   },[data, sdata])
 

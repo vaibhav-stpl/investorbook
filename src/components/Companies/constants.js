@@ -3,18 +3,18 @@ import { gql } from '@apollo/client';
 
 export const GET_INVESTORS_BY_COMPANY= gql`
 query GetInvestorsByCompanyId($company_id: Int!) {
-  investors(limit: 5, where: {company_id: {_eq: $company_id}}){
+  investment(limit: 5, where: {company_id: {_eq: $company_id}}){
       id
-      name
+      investor {
+        name
+      }
   }
 }
 `;
 export const ADD_COMPANY = gql`
-  mutation AddCompany($name: String!) {
+  mutation AddCompany($name: String) {
     insert_company_one(object: {name: $name}) {
       id
-      company_id
-      amount
     }
   }
 `;
@@ -28,7 +28,7 @@ export const GET_COMPANIES = gql`
 `;
 export const GET_FILTERS = gql`
   query GetCompanies($search: String!) {
-      company(where: {name: {_eq: $search}}, order_by: {created_at: asc}) {
+      company(where: {name: {_like: $search}},limit: 10, order_by: {created_at: asc}) {
           id
           name
       }

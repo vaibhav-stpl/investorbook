@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import Investors from './getInvestors'
 import PropTypes from 'prop-types';
 import { GET_COMPANIES , GET_FILTERS} from './constants'
+import { withRouter } from "react-router";
 
 const CompaniesList = (props) =>{
   const {offset, limit,searchFilter } = props
@@ -10,15 +11,15 @@ const CompaniesList = (props) =>{
   const { loading: sloading, error: serror, data: sdata } = useQuery(GET_FILTERS,{skip: searchFilter==='',variables: {search: searchFilter}});
   const [companies, setCompanies ] = useState([])
   useEffect(() => {
-    if (data) {
-      setCompanies(data.comany || sdata)
+    if (data || sdata) {
+      setCompanies(data?.company || sdata?.company)
     }
   },[data, sdata])
 
 
   if (loading || sloading) return <p>Loading...</p>;
   if (error || serror) return <p>Error :(</p>;
-  if (companies.length === 0) return <p>The database is empty!</p>
+  if (companies?.length === 0) return <p>The database is empty!</p>
   console.log(data)
 
   return(
@@ -28,9 +29,9 @@ const CompaniesList = (props) =>{
         <th>Investors</th>
       </tr>
       {
-      companies.map(({ id, name, photo_thumbnail }) => (
+      companies?.map(({ id, name }) => (
 
-        <tr  key={id}>
+        <tr key={id} onClick={ () => { props.history.push(`companies/${id}`)}}>
         <td>{name}</td>
         <td><Investors id={ id }/></td>
       </tr>
@@ -51,4 +52,4 @@ CompaniesList.propTypes = {
 
 };
 
-export default CompaniesList;
+export default withRouter(CompaniesList);

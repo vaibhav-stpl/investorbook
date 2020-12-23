@@ -11,12 +11,12 @@ const Investors = (props) =>{
 
   if (loading) return <p>Loading...</p>;
 if (error) return <p>error</p>;
-  if (data.investor.length === 0) return <p>The database is empty!</p>
+  if (data.investment.length === 0) return <p>The database is empty!</p>
   console.log(data)
 
-  return data.investor.map((item) => (
+  return data.investment.map((item) => (
       <span key={ item.id }>
-        { item?.name },
+        { item?.investor.name },
       </span>
   ));
 }
