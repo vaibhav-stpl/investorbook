@@ -38,9 +38,9 @@
 }
 
 
-.show{
-  display: contents !important;
-}
+/* .show{
+  display: contents;
+} */
 .investor-action{
   float: right;
 }
