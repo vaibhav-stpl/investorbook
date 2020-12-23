@@ -3,11 +3,14 @@ import { gql } from '@apollo/client';
 
 export const GET_INVESTORS_BY_COMPANY= gql`
 query GetInvestorsByCompanyId($company_id: Int!) {
-  investment(limit: 5, where: {company_id: {_eq: $company_id}}){
+  investment( where: {company_id: {_eq: $company_id}},order_by: {updated_at: desc}){
       id
       investor {
+        id
         name
       }
+      investor_id
+      amount
   }
 }
 `;
@@ -41,6 +44,10 @@ export const GET_COMPANY = gql`
           id
           name
     }
+    investor(limit: 500, order_by: {updated_at: desc}){
+        id
+        name
+    }
   }
 `;
 export const ADD_INVESTMENT = gql`
@@ -53,8 +60,8 @@ export const ADD_INVESTMENT = gql`
   }
 `;
 export const UPDATE_INVESTMENT = gql`
-  mutation UpdateInvestment($id: Int!, $amount: numeric, $company_id: Int!) {
-    update_investment_by_pk(pk_columns: {id: $id}, _set: {amount: $amount, company_id: $company_id}) {
+  mutation UpdateInvestment($id: Int!, $amount: numeric) {
+    update_investment_by_pk(pk_columns: {id: $id}, _set: {amount: $amount}) {
       id
     }
   }
@@ -83,3 +90,4 @@ export const DELETE_COMPANY = gql`
     }
   }
 `;
+

@@ -1,14 +1,15 @@
 import React, { useState , useRef} from 'react'
 import { useQuery , useMutation} from '@apollo/client';
 import { withRouter } from "react-router";
-import Investments from '../Investments/list'
+import InvestmentorsList from './investorsList'
 import Modal from 'react-bootstrap-modal';
 import { ToastContainer } from "react-toastr";
-// Example of a component that uses apollo-client to fetch data.
+import Select from "react-dropdown-select";
 import { ADD_INVESTMENT,UPDATE_INVESTMENT, UPDATE_COMPANY, DELETE_INVESTMENT,DELETE_COMPANY, GET_COMPANY} from './constants'
 
 const Company = (props) =>{
     const [openModal, setOpenModal] = useState(false)
+    const [ investorId, setInvestor] = useState(null)
     const [ amount, setAmount] = useState(null)
     const [editData, setEditData ] = useState({})
     const [editable, setEditable ] = useState(false)
@@ -51,10 +52,10 @@ const Company = (props) =>{
         if(editData.id){
           updateData(event)
         }else{
-          insert_investment_one({ variables: {amount: amount, company_id: data.company_by_pk.id } }).then((data)=>{
+          insert_investment_one({ variables: {amount: amount,investor_id: investorId,company_id: data.company_by_pk.id } }).then((data)=>{
             closeModalFun()
             toastr.current.success('Successfully Created','Success')
-            props.history.push(`/investors/${ id }`)
+            props.history.push(`/companies/${ id }`)
             props.history.go();
           }).catch((error)=>{
           })
@@ -110,7 +111,8 @@ const Company = (props) =>{
       toastr.current.error(error.message, 'Error')
     })
   }
-    
+
+  const options = data.investor.map((item) => ({label: item.name, value: item.id}))
   return(
    <div>
      <ToastContainer
@@ -133,7 +135,7 @@ const Company = (props) =>{
           </div>
         </div>
         <button onClick={openModalFun}>Add Investments</button>
-        <Investments 
+        <InvestmentorsList 
           id={data.company_by_pk.id.toString()} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
@@ -151,10 +153,11 @@ const Company = (props) =>{
               
             <span>{addInvestment.error?.message || UpdateInvestment.error?.message}</span>
             <div>
-                <h4>Add Investment</h4>
-                <h4>Please enter details of the investment</h4>
+                <h4>Add Investor</h4>
+                <h4>Please enter details of the investor</h4>
                 <form onSubmit={handleSubmit}>
-                    <input type='text' name='name' onChange={(event) => handleChange(event)} defaultValue={editData.name} />
+                    <Select disabled={editData.id} options={options} onChange={(values) => setInvestor(values[0]?.value)} values={options.filter((item) => item?.value === editData.investor?.id)} placeholder={'please select investors'} />
+                    <input type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} />
                     <input type='button' onClick={closeModalFun} value='cancel'/>
                     <input type='submit' value='submit'/>
                 </form>

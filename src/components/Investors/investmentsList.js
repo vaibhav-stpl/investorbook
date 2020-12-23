@@ -4,18 +4,18 @@ import { withRouter } from "react-router";
 import PropTypes from 'prop-types';
 import { GET_INVESTMENTS_BY_INVESTOR } from './constants'
 
-const Investments = (props) =>{
+const InvestmentsList = (props) =>{
     const { id , onEdit, onDelete } = props
     const { loading, error, data } = useQuery(GET_INVESTMENTS_BY_INVESTOR, {
         variables: { investor_id: id }
       });
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-  if (data?.investment?.length === 0) return <p>The database is empty!</p>
-  console.log(data)
-  const totalAmount =data?.investment?.reduce(function(tot, arr) { 
-    return tot + arr.amount;
-  },0);
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
+    if (data?.investment?.length === 0) return <p>The database is empty!</p>
+    console.log(data)
+    const totalAmount =data?.investment?.reduce(function(tot, arr) { 
+      return tot + arr.amount;
+    },0);
 
   
 
@@ -53,9 +53,9 @@ const Investments = (props) =>{
   
   
 }
-Investments.propTypes = {
+InvestmentsList.propTypes = {
   id:  PropTypes.string,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
 };
-export default withRouter(Investments);
+export default withRouter(InvestmentsList);

@@ -1,7 +1,7 @@
 import React, { useState , useRef} from 'react'
 import { useQuery , useMutation} from '@apollo/client';
 import { withRouter } from "react-router";
-import Investments from '../Investments/list'
+import InvestmentsList from './investmentsList'
 import Modal from 'react-bootstrap-modal';
 import Select from "react-dropdown-select";
 import { ToastContainer } from "react-toastr";
@@ -136,7 +136,7 @@ const Investor = (props) =>{
           </div>
         </div>
         <button onClick={openModalFun}>Add Investments</button>
-        <Investments 
+        <InvestmentsList 
           id={data.investor_by_pk.id.toString()} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
@@ -157,8 +157,8 @@ const Investor = (props) =>{
                 <h4>Add Investment</h4>
                 <h4>Please enter details of the investment</h4>
                 <form onSubmit={handleSubmit}>
-                <Select options={options} onChange={(values) => setCompany(values[0]?.value)} values={options.filter((item) => item?.value === editData.company_id)} />
-                    <input type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} />
+                  <Select options={options} onChange={(values) => setCompany(values[0]?.value)} values={options.filter((item) => item?.value === editData.company_id)} placeholder={'please select company'} />
+                    <input type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} placeholder='amount'/>
                     <input type='button' onClick={closeModalFun} value='cancel'/>
                     <input type='submit' value='submit'/>
                 </form>
