@@ -6,14 +6,14 @@ const Home = () => {
     const [key, setKey] = useState('investors');
 
     return (
-      <div class="main-wrapper">
-        <div class="container">
-        <h3 class="logo"><span>Investor</span>Book</h3>
+      <div className="main-wrapper">
+        <div className="container">
+        <h3 className="logo"><span>Investor</span>Book</h3>
       <Tabs
         id="controlled-tab-example"
         activeKey={key}
         onSelect={(k) => setKey(k)}
-        class="tab-header"
+        className="tab-header"
       >
         <Tab eventKey="investors" title="Investors">
           {key === 'investors' &&  <Investors /> }

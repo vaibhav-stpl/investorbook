@@ -34,9 +34,9 @@ const CompaniesList = (props) =>{
         {
         companies?.map(({ id, name }) => (
 
-          <tr class="table-row" key={id} onClick={ () => { props.history.push(`companies/${id}`)}}>
-          <td class="table-name">{name}</td>
-          <td class="table-desp"><Investors id={ id }/></td>
+          <tr className="table-row" key={id} onClick={ () => { props.history.push(`companies/${id}`)}}>
+          <td className="table-name">{name}</td>
+          <td className="table-desp"><Investors id={ id }/></td>
         </tr>
         ))
         }

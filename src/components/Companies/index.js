@@ -56,12 +56,12 @@ const Companies = (props) =>{
           className="toast-top-right"
           ref={toastr}
         />
-      <div class="search-wrapper"> 
-      <h4 class="search-title">Companies</h4>
-      <button class="search-investor" onClick={openModalFun}>Add company</button>
-      <div class="search-wrap">
+      <div className="search-wrapper"> 
+      <h4 className="search-title">Companies</h4>
+      <button className="search-investor" onClick={openModalFun}>Add company</button>
+      <div className="search-wrap">
        <input type='text' ref={search_filter} name='searchFilter'  />
-       <button class="search" onClick={handleFilter} >search</button>
+       <button className="search" onClick={handleFilter} >search</button>
        </div>
        </div>
         <CompaniesList limit={ limit } offset={ offset } searchFilter={searchFilter}  />
