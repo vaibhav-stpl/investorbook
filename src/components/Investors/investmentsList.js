@@ -10,7 +10,6 @@ const InvestmentsList = (props) =>{
         variables: { investor_id: id },
         fetchPolicy: "cache-and-network" 
       });
-
     useEffect(() => {
       if(data){
         const totalAmount =data?.investment?.reduce(function(tot, arr) { 
