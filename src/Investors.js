@@ -21,8 +21,6 @@ export default () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
   if (data.investor.length === 0) return <p>The database is empty!</p>
-  console.log(data)
-
   return data.investor.map(({ id, name }) => (
     <div key={id}>
       <p>

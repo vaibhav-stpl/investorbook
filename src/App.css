@@ -59,3 +59,39 @@ h3 span{
   color: #A0A0A0;
   padding: 12px;
 }
+
+#overlay{
+  position: absolute;
+  top:0px;
+  left:0px;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: .5;
+}
+
+.spinner-border {
+  position: relative;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 70px;
+  height: 70px;
+  left:50%;
+  top:50%;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+.list {
+  min-height: 500px;
+}
+/* ul.pagination li {
+    width: 29px;
+    height: 38px;
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+ul.pagination li.active a {
+  color: rgb(54, 130, 201);
+  font-weight: 800;
+} */

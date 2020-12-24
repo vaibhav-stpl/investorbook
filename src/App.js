@@ -5,6 +5,7 @@ import Company from './components/Companies/show'
 
 import Home from './components/'
 import { Switch, Route , BrowserRouter as Router} from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (

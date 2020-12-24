@@ -4,8 +4,9 @@ import { withRouter } from "react-router";
 import InvestmentsList from './investmentsList'
 import { Modal } from 'react-bootstrap'
 import Select from "react-dropdown-select";
-import { ToastContainer } from "react-toastr";
-import { ADD_INVESTMENT,UPDATE_INVESTMENT,GET_INVESTOR , UPDATE_INVESTOR ,DELETE_INVESTMENT, DELETE_INVESTOR} from './constants'
+import { toast } from "react-toastify";
+import {GET_INVESTMENTS_BY_INVESTOR, ADD_INVESTMENT,UPDATE_INVESTMENT,GET_INVESTOR , UPDATE_INVESTOR ,DELETE_INVESTMENT, DELETE_INVESTOR} from './constants'
+import Loader from '../../helpers/loader'
 
 const Investor = (props) =>{
     const [openModal, setOpenModal] = useState(false)
@@ -13,26 +14,43 @@ const Investor = (props) =>{
     const [ amount, setAmount] = useState(null)
     const [editData, setEditData ] = useState({})
     const [editable, setEditable ] = useState(false)
-    const [insert_investment_one, addInvestment ] = useMutation(ADD_INVESTMENT);
-    const [update_investment_by_pk, UpdateInvestment ] = useMutation(UPDATE_INVESTMENT);
-    const [update_investor_by_pk] = useMutation(UPDATE_INVESTOR)
-    const [delete_investment_by_pk ] = useMutation(DELETE_INVESTMENT);
-    const [delete_investor_by_pk ] = useMutation(DELETE_INVESTOR);
-
-
+    const [deletedInvestments, setDeletedInvestments] = useState([])
     const id =  props.history.location.pathname.split('/')[2]
-    const toastr = useRef();
+
+    const [insert_investment_one, addInvestment ] = useMutation(ADD_INVESTMENT,{
+      refetchQueries: [
+        { query: GET_INVESTMENTS_BY_INVESTOR, variables: {investor_id: id} }
+      ]
+    });
+    const [update_investment_by_pk, UpdateInvestment ] = useMutation(UPDATE_INVESTMENT,{
+      refetchQueries: [
+        { query: GET_INVESTMENTS_BY_INVESTOR, variables: {investor_id: id} }
+      ]
+    });
+    const [update_investor_by_pk] = useMutation(UPDATE_INVESTOR,{
+      refetchQueries: [
+        { query: GET_INVESTOR, variables: {id: id} }
+      ]
+    })
+    const [delete_investment_by_pk ] = useMutation(DELETE_INVESTMENT,{
+      refetchQueries: [
+        { query: GET_INVESTMENTS_BY_INVESTOR, variables: {investor_id: id} }
+      ]
+    });
+    const [delete_investor_by_pk ] = useMutation(DELETE_INVESTOR,{
+      refetchQueries: [
+        { query: GET_INVESTOR, variables: {id: id} }
+      ]
+    });
+
     const investor_name = useRef();
-
-
     const { loading, error, data } = useQuery(GET_INVESTOR, {
         variables: { id: parseInt(id) }
     });
     
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader />;
     if (error) return <p>Error :(</p>;
     if (!data.investor_by_pk) return <p>The database is empty!</p>
-    console.log(data)
 
     const openModalFun = () => {
         setOpenModal(true)
@@ -54,9 +72,7 @@ const Investor = (props) =>{
         }else{
           insert_investment_one({ variables: { amount: parseFloat(amount), company_id: companyId, investor_id: data.investor_by_pk.id } }).then((data)=>{
             closeModalFun()
-            toastr.current.success('Successfully Created','Success')
-            props.history.push(`/investors/${ id }`)
-            props.history.go();
+            toast.success('Successfully Created','Success')
           }).catch((error)=>{
           })
         }
@@ -67,11 +83,9 @@ const Investor = (props) =>{
       const company_id = companyId || editData.company_id
       update_investment_by_pk({variables: {id: editData.id, amount: amt, company_id: company_id}}).then((data)=>{
         closeModalFun()
-        toastr.current.success('Successfully Updated!','Success')
-        props.history.push(`/investors/${ id }`)
-        props.history.go();
+        toast.success('Successfully Updated!','Success')
       }).catch((error)=>{
-        toastr.current.error(error.message, 'Error')
+        toast.error(error.message, 'Error')
       })
     }
 
@@ -82,12 +96,13 @@ const Investor = (props) =>{
 
     const handleDelete = (item) => {
       delete_investment_by_pk({variables: {id: item.id}}).then((data)=>{
-        toastr.current.success('Successfully Deleted!','Success')
-        props.history.push(`/investors/${ id }`)
-        props.history.go();
+        const objects = [...deletedInvestments]
+        objects.push(data.data.delete_investment_by_pk.id)
+        setDeletedInvestments(objects)
 
+        toast.success('Successfully Deleted!','Success')
       }).catch((error)=>{
-        toastr.current.error(error.message, 'Error')
+        toast.error(error.message, 'Error')
       })
     }
 
@@ -96,34 +111,30 @@ const Investor = (props) =>{
   const updateInvestor = () => {
     const name = investor_name.current.value
     update_investor_by_pk({variables: {id: id, name: name}}).then((data)=>{
-      toastr.current.success('Successfully Updated!','Success')
-      props.history.push(`/investors/${ id }`)
-      props.history.go();
+      toast.success('Successfully Updated!','Success')
+      setEditable(false)
     }).catch((error)=>{
-      toastr.current.error(error.message, 'Error')
+      toast.error(error.message, 'Error')
     })
   }
   const deleteInvestor = () => {
     delete_investor_by_pk({variables: {id: id}}).then((data)=>{
-      toastr.current.success('Successfully Deleted!','Success')
+      toast.success('Successfully Deleted!','Success')
       props.history.push(`/`)
-      props.history.go();
+      props.history.go()
     }).catch((error)=>{
-      toastr.current.error(error.message, 'Error')
+      toast.error(error.message, 'Error')
     })
   }
     
   const options = data.company.map((item) => ({label: item.name, value: item.id}))
   return(
     <div className="main-wrapper">
-     <ToastContainer
-          className="toast-top-right"
-          ref={toastr}
-        />
+
           <div className="container">
         <div className='heading'>
         <button className="transparent-btn heading-btn" onClick={ () => props.history.push('/')} > 
-        <img src="/images/back.png" /> </button>
+        <img src="/images/back.png" alt='back'/> </button>
           <p className="heading-name">
             <img className="round heading-image" src={data.investor_by_pk.photo_thumbnail} alt={data.investor_by_pk.id} /> 
           {
@@ -135,9 +146,9 @@ const Investor = (props) =>{
           data.investor_by_pk.name}</p>
           <div className='investor-action'>
             <button className="transparent-btn action-btn" onClick={() => setEditable(true) }>
-            <img src="/images/edit-icon.png" />EDIT NAME</button>
+            <img src="/images/edit-icon.png" alt='edit' />EDIT NAME</button>
             <button className="transparent-btn action-btn" onClick={() => deleteInvestor() }>
-            <img src="/images/delete-icon.png" />REMOVE COMPANY</button>
+            <img src="/images/delete-icon.png" alt='delete' />REMOVE COMPANY</button>
           </div>
         </div>
         <div className="title-wrapper">
@@ -149,6 +160,7 @@ const Investor = (props) =>{
           onEdit={handleEdit} 
           onDelete={handleDelete}
           addInvestment={addInvestment}
+          deletedInvestments={deletedInvestments}
           
         />
         <Modal
@@ -167,8 +179,8 @@ const Investor = (props) =>{
             <div>
                 
                 <form onSubmit={handleSubmit}>
-                  <Select className="form-input" options={options} onChange={(values) => setCompany(values[0]?.value)} values={options.filter((item) => item?.value === editData.company_id)} placeholder={'please select company'} />
-                    <input className="form-input" type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} placeholder='amount'/>
+                  <Select className="form-input" options={options} onChange={(values) => setCompany(values[0]?.value)} values={options.filter((item) => item?.value === editData.company_id)} placeholder={'Please select company'} />
+                    <input className="form-input" type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} placeholder='Amount'/>
                     <input className="btn-transparent"  type='button' onClick={closeModalFun} value='cancel'/>
                     <input className="btn-theme"  type='submit' value='submit'/>
                 </form>

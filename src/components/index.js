@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Tabs ,Tab} from 'react-bootstrap'
 import Investors from './Investors'
 import Companies from './Companies'
+
 const Home = () => {
     const [key, setKey] = useState('investors');
 

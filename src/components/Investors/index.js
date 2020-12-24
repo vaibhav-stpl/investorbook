@@ -3,9 +3,10 @@ import { withRouter } from "react-router";
 import InvestorsList from './list'
 import Pagination from "react-js-pagination";
 import { Modal } from 'react-bootstrap'
-import { ToastContainer } from "react-toastr";
+import { toast } from "react-toastify";
 import { useMutation } from '@apollo/client';
 import { ADD_INVESTOR } from './constants'
+import { GET_INVESTORS } from './constants'
 
 
 const Investors = (props) =>{
@@ -13,11 +14,15 @@ const Investors = (props) =>{
   const [openModal, setOpenModal] = useState(false)
   const [searchFilter, setSearchFilter ] = useState('')
   const [formData , setFormData ] = useState({})
-  const [insert_investor_one, addInvestor ] = useMutation(ADD_INVESTOR);
-
   const [offset, setOffset ] = useState(0);
+
   const limit = 10;
-  const toastr = useRef();
+  const [insert_investor_one, addInvestor ] = useMutation(ADD_INVESTOR,{
+    refetchQueries: [
+      { query: GET_INVESTORS,variables: {offset: offset, limit: limit} }
+    ]
+  });
+
 
   const search_filter = useRef();
  
@@ -42,20 +47,14 @@ const Investors = (props) =>{
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    insert_investor_one({name: formData.name, photo_large: formData.photo_large, photo_thumbnail: formData.photo_thumbnail}).then((data)=>{
+    insert_investor_one({variables: {name: formData.name, photo_large: formData.photo_large, photo_thumbnail: formData.photo_thumbnail}}).then((data)=>{
       closeModalFun()
-      toastr.current.success('Successfully Created','Success')
-      props.history.push(`/`)
-      props.history.go();
+      toast.success('Successfully Created')
     }).catch((error)=>{
     })
   }
   return(
-    <div >
-       <ToastContainer
-          className="toast-top-right"
-          ref={toastr}
-        />
+    <div class='container' >
         <div className="search-wrapper">       
         <h4 className="search-title">Investors</h4>
         <button className="search-investor" onClick={openModalFun}>Add investor</button>
@@ -64,7 +63,9 @@ const Investors = (props) =>{
           <button className="search" onClick={handleFilter} >search</button>
         </div>
         </div>
-        <InvestorsList limit={ limit } offset={ offset } searchFilter={searchFilter} />
+        <div className='list'>
+          <InvestorsList limit={ limit } offset={ offset } searchFilter={searchFilter} />
+        </div>
         {
           searchFilter !=='' ? null : <Pagination
           activePage={activePage}
@@ -90,9 +91,9 @@ const Investors = (props) =>{
           <div>
               
               <form onSubmit={handleSubmit}>
-                  <input className="form-input" type='text' name='name' onChange={(event) => handleChange(event)} placeholder='name' /><br/>
-                  <input className="form-input" type='text' name='photo_large' onChange={(event) => handleChange(event)} placeholder='photo_large' /><br/>
-                  <input className="form-input" type='text' name='photo_thumbnail' onChange={(event) => handleChange(event)} placeholder='photo_thumbnail'  /><br/>
+                  <input className="form-input" type='text' name='name' onChange={(event) => handleChange(event)} placeholder='Name' /><br/>
+                  <input className="form-input" type='text' name='photo_large' onChange={(event) => handleChange(event)} placeholder='Photo large url' /><br/>
+                  <input className="form-input" type='text' name='photo_thumbnail' onChange={(event) => handleChange(event)} placeholder='Photo thumbnail url'  /><br/>
 
                   <input className="btn-transparent" type='button' onClick={closeModalFun} value='cancel'/>
                   <input className="btn-theme" type='submit' value='submit'/>
