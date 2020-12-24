@@ -80,26 +80,25 @@ const Investors = (props) =>{
         onHide={closeModalFun}
       >
           <Modal.Header closeButton>
-          <Modal.Title></Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            
           <span>{addInvestor.error?.message}</span>
+          <Modal.Title>
+          <h4>Add Investor</h4>
+              <p>Please enter details of the investor</p>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body> 
           <div>
-              <h4>Add Investor</h4>
-              <h4>Please enter details of the investor</h4>
+              
               <form onSubmit={handleSubmit}>
-                  <input type='text' name='name' onChange={(event) => handleChange(event)} placeholder='name' /><br/>
-                  <input type='text' name='photo_large' onChange={(event) => handleChange(event)} placeholder='photo_large' /><br/>
-                  <input type='text' name='photo_thumbnail' onChange={(event) => handleChange(event)} placeholder='photo_thumbnail'  /><br/>
+                  <input className="form-input" type='text' name='name' onChange={(event) => handleChange(event)} placeholder='name' /><br/>
+                  <input className="form-input" type='text' name='photo_large' onChange={(event) => handleChange(event)} placeholder='photo_large' /><br/>
+                  <input className="form-input" type='text' name='photo_thumbnail' onChange={(event) => handleChange(event)} placeholder='photo_thumbnail'  /><br/>
 
-                  <input type='button' onClick={closeModalFun} value='cancel'/>
-                  <input type='submit' value='submit'/>
+                  <input className="btn-transparent" type='button' onClick={closeModalFun} value='cancel'/>
+                  <input className="btn-theme" type='submit' value='submit'/>
               </form>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-        </Modal.Footer>
 
 
       </Modal>

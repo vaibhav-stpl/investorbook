@@ -90,8 +90,8 @@ const Companies = (props) =>{
               <h4>Please enter details of the company</h4>
               <form onSubmit={handleSubmit}>
                   <input type='text' name='name' onChange={(event) => handleChange(event)} placeholder='name' /><br/>
-                  <input type='button' onClick={closeModalFun} value='cancel'/>
-                  <input type='submit' value='submit'/>
+                  <input className="btn-transparent" type='button' onClick={closeModalFun} value='cancel'/>
+                  <input className="btn-theme" type='submit' value='submit'/>
               </form>
           </div>
         </Modal.Body>

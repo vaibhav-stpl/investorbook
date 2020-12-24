@@ -23,7 +23,7 @@ const CompaniesList = (props) =>{
   console.log(data)
 
   return(
-    <table >
+    <table className='investor-table table'>
       <thead>
         <tr>
           <th>Name</th>
@@ -35,7 +35,9 @@ const CompaniesList = (props) =>{
         companies?.map(({ id, name }) => (
 
           <tr className="table-row" key={id} onClick={ () => { props.history.push(`companies/${id}`)}}>
-          <td className="table-name">{name}</td>
+          <td className="table-img">
+          <div className="table-name">{name}</div>
+            </td>
           <td className="table-desp"><Investors id={ id }/></td>
         </tr>
         ))
