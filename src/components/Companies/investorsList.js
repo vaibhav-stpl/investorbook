@@ -35,7 +35,7 @@ const InvestorsList = (props) =>{
      
       data?.investment.map((item) => (
 
-        <tr key={item.id}>
+        <tr className="table-row" key={item.id}>
         <td>{item.investor.name}</td>
         <td>{item.amount}</td>
         <td className="action-right"> 

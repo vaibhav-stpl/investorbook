@@ -156,24 +156,24 @@ const Investor = (props) =>{
           onHide={closeModalFun}
         >
             <Modal.Header closeButton>
-            <Modal.Title></Modal.Title>
+            <Modal.Title>
+                <h4>Add Investment</h4>
+                <p>Please enter details of the investment</p>
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
               
             <span>{addInvestment.error?.message || UpdateInvestment.error?.message}</span>
             <div>
-                <h4>Add Investment</h4>
-                <h4>Please enter details of the investment</h4>
+                
                 <form onSubmit={handleSubmit}>
-                  <Select options={options} onChange={(values) => setCompany(values[0]?.value)} values={options.filter((item) => item?.value === editData.company_id)} placeholder={'please select company'} />
-                    <input type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} placeholder='amount'/>
-                    <input type='button' onClick={closeModalFun} value='cancel'/>
-                    <input type='submit' value='submit'/>
+                  <Select className="form-input" options={options} onChange={(values) => setCompany(values[0]?.value)} values={options.filter((item) => item?.value === editData.company_id)} placeholder={'please select company'} />
+                    <input className="form-input" type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} placeholder='amount'/>
+                    <input className="btn-transparent"  type='button' onClick={closeModalFun} value='cancel'/>
+                    <input className="btn-theme"  type='submit' value='submit'/>
                 </form>
             </div>
           </Modal.Body>
-          <Modal.Footer>
-          </Modal.Footer>
 
 
         </Modal>

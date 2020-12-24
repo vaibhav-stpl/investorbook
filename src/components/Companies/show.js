@@ -171,15 +171,17 @@ const Company = (props) =>{
             <div>
                 
                 <form onSubmit={handleSubmit}>
-                    <Select className="form-input" disabled={editData.id} options={options} onChange={(values) => setInvestor(values[0]?.value)} values={options.filter((item) => item?.value === editData.investor?.id)} placeholder={'please select investors'} />
+                    <Select className="form-input"
+                     disabled={editData.id} 
+                     options={options} onChange={(values) => setInvestor(values[0]?.value)} 
+                     values={options.filter((item) => item?.value === editData.investor?.id)}
+                     placeholder={'please select investors'} />
                     <input className="form-input" type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} />
                     <input className="btn-transparent" type='button' onClick={closeModalFun} value='cancel'/>
                     <input className="btn-theme" type='submit' value='submit'/>
                 </form>
             </div>
           </Modal.Body>
-          <Modal.Footer>
-          </Modal.Footer>
 
 
         </Modal>
