@@ -132,8 +132,8 @@ const Company = (props) =>{
           {
             editable ? 
             <React.Fragment>
-              <input type='text' ref={company_name} name='investor' defaultValue={ data.company_by_pk.name } />
-              <button onClick={updateCompany} >update</button>
+              <input className="form-input heading-input" type='text' ref={company_name} name='investor' defaultValue={ data.company_by_pk.name } />
+              <button className="btn-theme update-button" onClick={updateCompany} >update</button>
             </React.Fragment> :
             data.company_by_pk.name}
           </p>

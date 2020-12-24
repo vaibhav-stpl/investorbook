@@ -129,15 +129,15 @@ const Investor = (props) =>{
           {
             editable ? 
             <React.Fragment>
-              <input type='text' ref={investor_name} name='investor' defaultValue={ data.investor_by_pk.name } />
-              <button onClick={updateInvestor} >update</button>
+              <input className="form-input heading-input" type='text' ref={investor_name} name='investor' defaultValue={ data.investor_by_pk.name } />
+              <button className="btn-theme update-button" onClick={updateInvestor} >update</button>
             </React.Fragment> :
           data.investor_by_pk.name}</p>
           <div className='investor-action'>
             <button className="transparent-btn action-btn" onClick={() => setEditable(true) }>
             <img src="/images/edit-icon.png" />EDIT NAME</button>
             <button className="transparent-btn action-btn" onClick={() => deleteInvestor() }>
-            <img src="/images/delete-icon.png" />EDIT NAME</button>
+            <img src="/images/delete-icon.png" />REMOVE COMPANY</button>
           </div>
         </div>
         <div className="title-wrapper">
