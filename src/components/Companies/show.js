@@ -115,27 +115,39 @@ const Company = (props) =>{
 
   const options = data.investor.map((item) => ({label: item.name, value: item.id}))
   return(
-   <div>
+   <div className="main-wrapper">
      <ToastContainer
           className="toast-top-right"
           ref={toastr}
         />
-     <button onClick={ () => props.history.push('/')} >Back </button>
+        <div className="container">
+
+       
+    
         <div className='heading'>
-          <p>
+        <button className="transparent-btn heading-btn" onClick={ () => props.history.push('/')} >
+          <img src="/images/back.png" />
+        </button>
+          <p className="heading-name">
           {
             editable ? 
             <React.Fragment>
               <input type='text' ref={company_name} name='investor' defaultValue={ data.company_by_pk.name } />
               <button onClick={updateCompany} >update</button>
             </React.Fragment> :
-          data.company_by_pk.name}</p>
+            data.company_by_pk.name}
+          </p>
           <div className='investor-action'>
-            <button onClick={() => setEditable(true) }>Edit</button>
-            <button onClick={() => deleteCompany() }>Delete</button>
+            <button className="transparent-btn action-btn" onClick={() => setEditable(true) }>
+              <img src="/images/edit-icon.png" />EDIT NAME</button>
+            <button className="transparent-btn action-btn" onClick={() => deleteCompany() }>
+              <img src="/images/delete-icon.png" />REMOVE COMPANY</button>
           </div>
         </div>
-        <button onClick={openModalFun}>Add Investments</button>
+        <div className="title-wrapper">
+          <p className="title">Investment</p>
+          <button className="btn-transparent" onClick={openModalFun}>+ Add Investors</button>
+        </div>
         <InvestmentorsList 
           id={data.company_by_pk.id} 
           onEdit={handleEdit} 
@@ -148,18 +160,21 @@ const Company = (props) =>{
           onHide={closeModalFun}
         >
             <Modal.Header closeButton>
+            <Modal.Title>
+                <h4>Add Investor</h4>
+                <p>Please enter details of the investor</p>
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
               
             <span>{addInvestment.error?.message || UpdateInvestment.error?.message}</span>
             <div>
-                <h4>Add Investor</h4>
-                <h4>Please enter details of the investor</h4>
+                
                 <form onSubmit={handleSubmit}>
-                    <Select disabled={editData.id} options={options} onChange={(values) => setInvestor(values[0]?.value)} values={options.filter((item) => item?.value === editData.investor?.id)} placeholder={'please select investors'} />
-                    <input type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} />
-                    <input type='button' onClick={closeModalFun} value='cancel'/>
-                    <input type='submit' value='submit'/>
+                    <Select className="form-input" disabled={editData.id} options={options} onChange={(values) => setInvestor(values[0]?.value)} values={options.filter((item) => item?.value === editData.investor?.id)} placeholder={'please select investors'} />
+                    <input className="form-input" type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} />
+                    <input className="btn-transparent" type='button' onClick={closeModalFun} value='cancel'/>
+                    <input className="btn-theme" type='submit' value='submit'/>
                 </form>
             </div>
           </Modal.Body>
@@ -168,6 +183,7 @@ const Company = (props) =>{
 
 
         </Modal>
+        </div>
    </div>
 
   )

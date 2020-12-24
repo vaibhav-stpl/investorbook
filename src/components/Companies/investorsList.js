@@ -9,7 +9,7 @@ const InvestorsList = (props) =>{
     const { loading, error, data } = useQuery(GET_INVESTORS_BY_COMPANY, {
         variables: { company_id: id }
       });
-    if (loading) return <p>Loading...</p>;
+    if (loading) return  <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
     if (data?.investment?.length === 0) return <p>The database is empty!</p>
     console.log(data)
@@ -27,7 +27,7 @@ const InvestorsList = (props) =>{
       <tr>
         <th>Name</th>
         <th>Amount</th>
-        <th>Action</th>
+        <th className="action-right">Actions</th>
       </tr>
       </thead>
       <tbody>
@@ -38,9 +38,13 @@ const InvestorsList = (props) =>{
         <tr key={item.id}>
         <td>{item.investor.name}</td>
         <td>{item.amount}</td>
-        <td> 
-          <button onClick={() => onEdit(item)}>edit</button>
-          <button onClick={() => onDelete(item)}>delete</button>
+        <td className="action-right"> 
+          <button className="transparent-btn mr-20" onClick={() => onEdit(item)}>
+            <img src="/images/edit-icon.png" />
+          </button>
+          <button className="transparent-btn" onClick={() => onDelete(item)}>
+          <img src="/images/delete-icon.png" />
+          </button>
         </td>
       </tr>
       ))

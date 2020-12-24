@@ -115,14 +115,17 @@ const Investor = (props) =>{
     
   const options = data.company.map((item) => ({label: item.name, value: item.id}))
   return(
-   <div>
+    <div className="main-wrapper">
      <ToastContainer
           className="toast-top-right"
           ref={toastr}
         />
-     <button onClick={ () => props.history.push('/')} >Back </button>
+          <div className="container">
         <div className='heading'>
-          <p><img src={data.investor_by_pk.photo_thumbnail} alt={data.investor_by_pk.id} /> 
+        <button className="transparent-btn heading-btn" onClick={ () => props.history.push('/')} > 
+        <img src="/images/back.png" /> </button>
+          <p className="heading-name">
+            <img className="round heading-image" src={data.investor_by_pk.photo_thumbnail} alt={data.investor_by_pk.id} /> 
           {
             editable ? 
             <React.Fragment>
@@ -131,11 +134,16 @@ const Investor = (props) =>{
             </React.Fragment> :
           data.investor_by_pk.name}</p>
           <div className='investor-action'>
-            <button onClick={() => setEditable(true) }>Edit</button>
-            <button onClick={() => deleteInvestor() }>Delete</button>
+            <button className="transparent-btn action-btn" onClick={() => setEditable(true) }>
+            <img src="/images/edit-icon.png" />EDIT NAME</button>
+            <button className="transparent-btn action-btn" onClick={() => deleteInvestor() }>
+            <img src="/images/delete-icon.png" />EDIT NAME</button>
           </div>
         </div>
-        <button onClick={openModalFun}>Add Investments</button>
+        <div className="title-wrapper">
+        <p className="title">Investment</p>
+        <button className="btn-transparent" onClick={openModalFun}>+ Add Investments</button>
+        </div>
         <InvestmentsList 
           id={data.investor_by_pk.id} 
           onEdit={handleEdit} 
@@ -169,6 +177,7 @@ const Investor = (props) =>{
 
 
         </Modal>
+   </div>
    </div>
 
   )

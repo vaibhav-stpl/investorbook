@@ -20,7 +20,7 @@ const InvestorsList = (props) =>{
   },[data, sdata])
 
 
-  if (loading || sloading) return <p>Loading...</p>;
+  if (loading || sloading) return  <p>Loading...</p>;
   if (error || serror) return <p>Error :(</p>;
   if (investors.length === 0) return <p>The database is empty!</p>
   
