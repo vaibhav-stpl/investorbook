@@ -252,9 +252,9 @@ button:focus{
 
 
 .investor-action {
-    align-self: flex-end;
+    align-self: center;
     margin-left: auto;
-    width: 285px;
+    width: 395px;
     max-width: 100%;
     display: flex;
 }
@@ -295,12 +295,8 @@ button:focus{
     line-height: 22px;
     color: #000000;
     width: 100%;
-    /* display: flex; */
+    display: flex;
     align-items: center;
-}
-.heading-name span {
-    font-weight: 300;
-    font-size: 16px;
 }
 .mr-20{
     margin-right: 20px;
@@ -315,6 +311,7 @@ button:focus{
 .title-wrapper{
     display: flex;
     align-items: center;
+    margin-bottom: 32px;
 }
 .css-93ilmd-DropDown{
     min-width: 100%;
@@ -329,4 +326,9 @@ button:focus{
     line-height: 12px;
     padding: 12px 27px;
     text-transform: capitalize;
+}
+.sub-title{
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 14px;
 }

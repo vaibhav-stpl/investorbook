@@ -128,14 +128,14 @@ const Investor = (props) =>{
 
           <div className="container">
         <div className='heading'>
-          <div className='col-md-8 heading-action'>
+          <div className='heading-action'>
           <button className="transparent-btn heading-btn" onClick={ () => props.history.push('/')} > 
           <img src="/images/back.png" alt='back'/> </button>
-          <p className="heading-name row">
+          <div className="heading-name">
             <div className='investor-image'>
             <img className="round heading-image" src={data.investor_by_pk.photo_thumbnail} alt={data.investor_by_pk.id} /> 
             </div>
-            <div className='col-md-10'>
+            <div className='px-3'>
           {
             editable ? 
             <React.Fragment>
@@ -144,14 +144,13 @@ const Investor = (props) =>{
             </React.Fragment> :
           data.investor_by_pk.name}
           
-           <br/><span>Total Amount Invested: ${numberWithCommas(totalAmount)}</span>
+           <br/><span className="sub-title">Total Amount Invested: ${numberWithCommas(totalAmount)}</span>
            </div>
-          </p>
+          </div>
          
           </div>
          
-          <div className='investor-action pull-right col-md-4'>
-            
+          <div className='investor-action'>            
             <button className="transparent-btn action-btn" onClick={() => setEditable(true) }>
             <img src="/images/edit-icon.png" alt='edit' />EDIT NAME</button>
             <button className="transparent-btn action-btn" onClick={() => deleteInvestor() }>

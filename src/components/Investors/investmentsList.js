@@ -17,6 +17,9 @@ const InvestmentsList = (props) =>{
         },0);
         setTotalAmount(totalAmount)
       }
+      return() => {
+        setTotalAmount(0)
+      }
     },[data ,setTotalAmount])
     if (loading) return <Loader />;
     if (error) return <p>Error :(</p>;
