@@ -303,3 +303,6 @@ button:focus{
     display: flex;
     align-items: center;
 }
+.css-93ilmd-DropDown{
+    min-width: 100%;
+}
