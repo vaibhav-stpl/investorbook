@@ -16,13 +16,14 @@ export const ADD_INVESTOR = gql`
   mutation AddInvestor($name: String, $photo_large: String, $photo_thumbnail: String) {
     insert_investor_one(object: {name: $name,photo_large:  $photo_large, photo_thumbnail: $photo_thumbnail}) {
       id
+      name
     }
   }
 `;
 
 export const GET_INVESTORS = gql`
   query GetInvestors($offset: Int!, $limit: Int!) {
-      investor(limit: $limit, offset: $offset, order_by: {created_at: asc}) {
+      investor(limit: $limit, offset: $offset, order_by: {updated_at: desc}) {
           id
           name
           photo_large

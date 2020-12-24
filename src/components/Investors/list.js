@@ -4,6 +4,7 @@ import Investments from './getInvestments'
 import { withRouter } from "react-router";
 import PropTypes from 'prop-types';
 import { GET_INVESTORS,GET_FILTERS } from './constants'
+import Loader from '../../helpers/loader'
 
 // Example of a component that uses apollo-client to fetch data.
 
@@ -20,7 +21,7 @@ const InvestorsList = (props) =>{
   },[data, sdata])
 
 
-  if (loading || sloading) return  <p>Loading...</p>;
+  if (loading || sloading) return <Loader />;
   if (error || serror) return <p>Error :(</p>;
   if (investors.length === 0) return <p>The database is empty!</p>
   

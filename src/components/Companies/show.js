@@ -3,37 +3,54 @@ import { useQuery , useMutation} from '@apollo/client';
 import { withRouter } from "react-router";
 import InvestmentorsList from './investorsList'
 import { Modal } from 'react-bootstrap'
-
-import { ToastContainer } from "react-toastr";
+import Loader from '../../helpers/loader'
+import { toast } from 'react-toastify';
 import Select from "react-dropdown-select";
-import { ADD_INVESTMENT,UPDATE_INVESTMENT, UPDATE_COMPANY, DELETE_INVESTMENT,DELETE_COMPANY, GET_COMPANY} from './constants'
+import {GET_INVESTORS_BY_COMPANY, ADD_INVESTMENT,UPDATE_INVESTMENT, UPDATE_COMPANY, DELETE_INVESTMENT,DELETE_COMPANY, GET_COMPANY} from './constants'
 
 const Company = (props) =>{
     const [openModal, setOpenModal] = useState(false)
     const [ investorId, setInvestor] = useState(null)
     const [ amount, setAmount] = useState(null)
     const [editData, setEditData ] = useState({})
+    const [deletedInvestments, setDeletedInvestments] = useState([])
+
     const [editable, setEditable ] = useState(false)
-    const [insert_investment_one, addInvestment ] = useMutation(ADD_INVESTMENT);
-    const [update_investment_by_pk, UpdateInvestment ] = useMutation(UPDATE_INVESTMENT);
-    const [update_company_by_pk] = useMutation(UPDATE_COMPANY)
-    const [delete_investment_by_pk ] = useMutation(DELETE_INVESTMENT);
-    const [delete_company_by_pk ] = useMutation(DELETE_COMPANY);
-
-
     const id =  props.history.location.pathname.split('/')[2]
-    const toastr = useRef();
+    const [insert_investment_one, addInvestment ] = useMutation(ADD_INVESTMENT,{
+      refetchQueries: [
+        { query: GET_INVESTORS_BY_COMPANY, variables: {company_id: id} }
+      ]
+    });
+    const [update_investment_by_pk, UpdateInvestment ] = useMutation(UPDATE_INVESTMENT,{
+      refetchQueries: [
+        { query: GET_INVESTORS_BY_COMPANY, variables: {company_id: id} }
+      ]
+    });
+    const [update_company_by_pk] = useMutation(UPDATE_COMPANY,{
+      refetchQueries: [
+        { query: GET_COMPANY, variables: {id: id} }
+      ]
+    });
+    const [delete_investment_by_pk ] = useMutation(DELETE_INVESTMENT,{
+      refetchQueries: [
+        { query: GET_INVESTORS_BY_COMPANY, variables: {company_id: id} }
+      ]
+    });
+    const [delete_company_by_pk ] = useMutation(DELETE_COMPANY,{
+      refetchQueries: [
+        { query: GET_COMPANY, variables: {id: id} }
+      ]
+    });
+    
     const company_name = useRef();
-
-
     const { loading, error, data } = useQuery(GET_COMPANY, {
         variables: { id: parseInt(id) }
     });
  
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader />;
     if (error) return <p>Error :(</p>;
     if (!data.company_by_pk) return <p>The database is empty!</p>
-    console.log(data)
 
     const openModalFun = () => {
         setOpenModal(true)
@@ -55,9 +72,7 @@ const Company = (props) =>{
         }else{
           insert_investment_one({ variables: {amount: amount,investor_id: investorId,company_id: data.company_by_pk.id } }).then((data)=>{
             closeModalFun()
-            toastr.current.success('Successfully Created','Success')
-            props.history.push(`/companies/${ id }`)
-            props.history.go();
+            toast.success('Successfully Created')
           }).catch((error)=>{
           })
         }
@@ -67,11 +82,9 @@ const Company = (props) =>{
       const amt = amount || editData.amount
       update_investment_by_pk({variables: {id: editData.id, amount: amt}}).then((data)=>{
         closeModalFun()
-        toastr.current.success('Successfully Updated!','Success')
-        props.history.push(`/companies/${ id }`)
-        props.history.go();
+        toast.success('Successfully Updated!')
       }).catch((error)=>{
-        toastr.current.error(error.message, 'Error')
+        toast.error(error.message)
       })
     }
 
@@ -82,12 +95,13 @@ const Company = (props) =>{
 
     const handleDelete = (item) => {
       delete_investment_by_pk({variables: {id: item.id}}).then((data)=>{
-        toastr.current.success('Successfully Deleted!','Success')
-        props.history.push(`/companies/${ id }`)
-        props.history.go();
+        toast.success('Successfully Deleted!');
+        const objects = [...deletedInvestments]
+        objects.push(data.data.delete_investment_by_pk.id)
+        setDeletedInvestments(objects)
 
       }).catch((error)=>{
-        toastr.current.error(error.message, 'Error')
+        toast.error(error.message)
       })
     }
 
@@ -96,37 +110,30 @@ const Company = (props) =>{
   const updateCompany = () => {
     const name = company_name.current.value
     update_company_by_pk({variables: {id: id, name: name}}).then((data)=>{
-      toastr.current.success('Successfully Updated!','Success')
-      props.history.push(`/companies/${ id }`)
-      props.history.go();
+     toast.success('Successfully Updated!')
+      setEditable(false)
     }).catch((error)=>{
-      toastr.current.error(error.message, 'Error')
+     toast.error(error.message)
     })
   }
   const deleteCompany = () => {
     delete_company_by_pk({variables: {id: id}}).then((data)=>{
-      toastr.current.success('Successfully Deleted!','Success')
-      props.history.push(`/`)
-      props.history.go();
+     toast.success('Successfully Deleted!')
+      props.history.push('/')
+      props.history.go()
     }).catch((error)=>{
-      toastr.current.error(error.message, 'Error')
+      toast.error(error.message)
     })
   }
 
   const options = data.investor.map((item) => ({label: item.name, value: item.id}))
   return(
-   <div className="main-wrapper">
-     <ToastContainer
-          className="toast-top-right"
-          ref={toastr}
-        />
-        <div className="container">
+    <div className="main-wrapper">
 
-       
-    
+          <div className="container">
         <div className='heading'>
         <button className="transparent-btn heading-btn" onClick={ () => props.history.push('/')} >
-          <img src="/images/back.png" />
+          <img src="/images/back.png" alt='back' />
         </button>
           <p className="heading-name">
           {
@@ -139,9 +146,9 @@ const Company = (props) =>{
           </p>
           <div className='investor-action'>
             <button className="transparent-btn action-btn" onClick={() => setEditable(true) }>
-              <img src="/images/edit-icon.png" />EDIT NAME</button>
+              <img src="/images/edit-icon.png" alt='edit'/>EDIT NAME</button>
             <button className="transparent-btn action-btn" onClick={() => deleteCompany() }>
-              <img src="/images/delete-icon.png" />REMOVE COMPANY</button>
+              <img src="/images/delete-icon.png" alt='remove' />REMOVE COMPANY</button>
           </div>
         </div>
         <div className="title-wrapper">
@@ -153,6 +160,7 @@ const Company = (props) =>{
           onEdit={handleEdit} 
           onDelete={handleDelete}
           addInvestment={addInvestment}
+          deletedInvestments={deletedInvestments}
           
         />
         <Modal
@@ -171,7 +179,7 @@ const Company = (props) =>{
             <div>
                 
                 <form onSubmit={handleSubmit}>
-                    <Select className="form-input" disabled={editData.id} options={options} onChange={(values) => setInvestor(values[0]?.value)} values={options.filter((item) => item?.value === editData.investor?.id)} placeholder={'please select investors'} />
+                    <Select className="form-input" disabled={editData.id} options={options} onChange={(values) => setInvestor(values[0]?.value)} values={options.filter((item) => item?.value === editData.investor?.id)} placeholder={'Please select investors'} />
                     <input className="form-input" type='number' name='amount' onChange={(event) => handleChange(event)} defaultValue={editData.amount} />
                     <input className="btn-transparent" type='button' onClick={closeModalFun} value='cancel'/>
                     <input className="btn-theme" type='submit' value='submit'/>
@@ -184,7 +192,7 @@ const Company = (props) =>{
 
         </Modal>
         </div>
-   </div>
+        </div>
 
   )
   

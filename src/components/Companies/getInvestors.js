@@ -12,13 +12,9 @@ const Investors = (props) =>{
   if (loading) return <p>Loading...</p>;
 if (error) return <p>error</p>;
   if (data.investment.length === 0) return <p>The database is empty!</p>
-  console.log(data)
 
   return data.investment.map((item) => (
-      <span key={ item.id }>
-        { item?.investor.name },
-      </span>
-  ));
+    item?.investor?.name)).join(', ');
 }
 Investors.propTypes = {
   id:  PropTypes.number,

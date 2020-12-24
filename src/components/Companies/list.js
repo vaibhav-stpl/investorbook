@@ -4,6 +4,7 @@ import Investors from './getInvestors'
 import PropTypes from 'prop-types';
 import { GET_COMPANIES , GET_FILTERS} from './constants'
 import { withRouter } from "react-router";
+import Loader from '../../helpers/loader'
 
 const CompaniesList = (props) =>{
   const {offset, limit,searchFilter } = props
@@ -17,10 +18,9 @@ const CompaniesList = (props) =>{
   },[data, sdata])
 
 
-  if (loading || sloading) return <p>Loading...</p>;
+  if (loading || sloading) return <Loader />;
   if (error || serror) return <p>Error :(</p>;
   if (companies?.length === 0) return <p>The database is empty!</p>
-  console.log(data)
 
   return(
     <table className='investor-table table'>

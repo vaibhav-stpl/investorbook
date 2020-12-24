@@ -2,10 +2,11 @@ import React , { useState ,useRef }from 'react'
 import { withRouter } from "react-router";
 import CompaniesList from './list'
 import Pagination from "react-js-pagination";
-import { ToastContainer } from "react-toastr";
+import { toast } from 'react-toastify';
 import { useMutation } from '@apollo/client';
 import { Modal } from 'react-bootstrap'
 import { ADD_COMPANY } from './constants'
+import { GET_COMPANIES } from './constants'
 
 const Companies = (props) =>{
   const [activePage, setActivePage ] = useState(1)
@@ -14,12 +15,14 @@ const Companies = (props) =>{
   const [openModal, setOpenModal] = useState(false)
   const [offset, setOffset ] = useState(0);
   const search_filter = useRef();
-  const [insert_company_one, addCompany ] = useMutation(ADD_COMPANY);
-  const toastr = useRef();
   const limit = 10;
+  const [insert_company_one, addCompany ] = useMutation(ADD_COMPANY,{
+    refetchQueries: [
+      { query: GET_COMPANIES, variables: {offset: offset, limit: limit} }
+    ]
+  });
 
 
- 
   const handlePageChange = ( page) => {
     setActivePage(page)
     const offest = page === '1' ? 0 : parseInt((page-1)+"1")
@@ -42,20 +45,14 @@ const Companies = (props) =>{
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    insert_company_one({name: formData.name}).then((data)=>{
+    insert_company_one({variables: {name: formData.name}}).then((data)=>{
       closeModalFun()
-      toastr.current.success('Successfully Created','Success')
-      props.history.push(`/`)
-      props.history.go();
+      toast.success('Successfully Created','Success');
     }).catch((error)=>{
     })
   }
   return(
     <div >
-        <ToastContainer
-          className="toast-top-right"
-          ref={toastr}
-        />
       <div className="search-wrapper"> 
       <h4 className="search-title">Companies</h4>
       <button className="search-investor" onClick={openModalFun}>Add company</button>
@@ -64,7 +61,9 @@ const Companies = (props) =>{
        <button className="search" onClick={handleFilter} >search</button>
        </div>
        </div>
-        <CompaniesList limit={ limit } offset={ offset } searchFilter={searchFilter}  />
+       <div className='list'>
+          <CompaniesList limit={ limit } offset={ offset } searchFilter={searchFilter}  />
+        </div>
         {
           searchFilter !=='' ? null : <Pagination
           activePage={activePage}
@@ -89,7 +88,7 @@ const Companies = (props) =>{
         <Modal.Body>  
           <div>
               <form onSubmit={handleSubmit}>
-                  <input className="form-input" type='text' name='name' onChange={(event) => handleChange(event)} placeholder='name' /><br/>
+                  <input className="form-input" type='text' name='name' onChange={(event) => handleChange(event)} placeholder='Name' /><br/>
                   <input className="btn-transparent" type='button' onClick={closeModalFun} value='cancel'/>
                   <input className="btn-theme" type='submit' value='submit'/>
               </form>

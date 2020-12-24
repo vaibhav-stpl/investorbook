@@ -5,6 +5,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { ToastContainer } from 'react-toastify';
 
 const client = new ApolloClient({
   uri: "https://electric-kangaroo-87.hasura.app/v1/graphql",
@@ -14,6 +15,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
+      <ToastContainer />
       <App />
     </ApolloProvider>
   </React.StrictMode>,
