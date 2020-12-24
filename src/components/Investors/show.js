@@ -14,13 +14,12 @@ const Investor = (props) =>{
     const [ amount, setAmount] = useState(null)
     const [editData, setEditData ] = useState({})
     const [editable, setEditable ] = useState(false)
-    const [deletedInvestments, setDeletedInvestments] = useState([])
     const id =  props.history.location.pathname.split('/')[2]
 
     const [insert_investment_one, addInvestment ] = useMutation(ADD_INVESTMENT,{
       refetchQueries: [
         { query: GET_INVESTMENTS_BY_INVESTOR, variables: {investor_id: id} }
-      ]
+      ],fetchPolicy: "no-cache" 
     });
     const [update_investment_by_pk, UpdateInvestment ] = useMutation(UPDATE_INVESTMENT,{
       refetchQueries: [
@@ -96,10 +95,6 @@ const Investor = (props) =>{
 
     const handleDelete = (item) => {
       delete_investment_by_pk({variables: {id: item.id}}).then((data)=>{
-        const objects = [...deletedInvestments]
-        objects.push(data.data.delete_investment_by_pk.id)
-        setDeletedInvestments(objects)
-
         toast.success('Successfully Deleted!','Success')
       }).catch((error)=>{
         toast.error(error.message, 'Error')
@@ -126,7 +121,7 @@ const Investor = (props) =>{
       toast.error(error.message, 'Error')
     })
   }
-    
+   debugger
   const options = data.company.map((item) => ({label: item.name, value: item.id}))
   return(
     <div className="main-wrapper">
@@ -159,9 +154,7 @@ const Investor = (props) =>{
           id={data.investor_by_pk.id} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
-          addInvestment={addInvestment}
-          deletedInvestments={deletedInvestments}
-          
+          addInvestment={addInvestment}          
         />
         <Modal
           show={openModal}

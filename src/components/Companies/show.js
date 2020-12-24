@@ -13,7 +13,6 @@ const Company = (props) =>{
     const [ investorId, setInvestor] = useState(null)
     const [ amount, setAmount] = useState(null)
     const [editData, setEditData ] = useState({})
-    const [deletedInvestments, setDeletedInvestments] = useState([])
 
     const [editable, setEditable ] = useState(false)
     const id =  props.history.location.pathname.split('/')[2]
@@ -96,10 +95,6 @@ const Company = (props) =>{
     const handleDelete = (item) => {
       delete_investment_by_pk({variables: {id: item.id}}).then((data)=>{
         toast.success('Successfully Deleted!');
-        const objects = [...deletedInvestments]
-        objects.push(data.data.delete_investment_by_pk.id)
-        setDeletedInvestments(objects)
-
       }).catch((error)=>{
         toast.error(error.message)
       })
@@ -159,9 +154,7 @@ const Company = (props) =>{
           id={data.company_by_pk.id} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
-          addInvestment={addInvestment}
-          deletedInvestments={deletedInvestments}
-          
+          addInvestment={addInvestment}          
         />
         <Modal
           show={openModal}

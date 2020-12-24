@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 import { GET_INVESTMENTS_BY_INVESTOR } from './constants'
 import Loader from  '../../helpers/loader'
 const InvestmentsList = (props) =>{
-    const { id , onEdit, onDelete , deletedInvestments } = props
+    const { id , onEdit, onDelete  } = props
     const { loading, error, data } = useQuery(GET_INVESTMENTS_BY_INVESTOR, {
-        variables: { investor_id: id }
+        variables: { investor_id: id },
+        fetchPolicy: "cache-and-network" 
       });
     if (loading) return <Loader />;
     if (error) return <p>Error :(</p>;
@@ -30,7 +31,7 @@ const InvestmentsList = (props) =>{
       <tbody>
       {
      
-      data?.investment.filter((item)=> !deletedInvestments.includes(item.id)).map((item) => (
+      data?.investment.map((item) => (
 
         <tr key={item.id}>
         <td>{item.company.name}</td>
@@ -57,7 +58,6 @@ const InvestmentsList = (props) =>{
 InvestmentsList.propTypes = {
   id:  PropTypes.number,
   onEdit: PropTypes.func,
-  onDelete: PropTypes.func,
-  deletedInvestments: PropTypes.array
+  onDelete: PropTypes.func
 };
 export default withRouter(InvestmentsList);
