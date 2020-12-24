@@ -54,7 +54,7 @@ const Investors = (props) =>{
     })
   }
   return(
-    <div class='container' >
+    <div className='container' >
         <div className="search-wrapper">       
         <h4 className="search-title">Investors</h4>
         <button className="search-investor" onClick={openModalFun}>Add investor</button>

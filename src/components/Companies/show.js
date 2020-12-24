@@ -139,7 +139,7 @@ const Company = (props) =>{
             </React.Fragment> :
             data.company_by_pk.name}
           </p>
-          <div className='investor-action'>
+          <div className='investor-action col-md-4'>
             <button className="transparent-btn action-btn" onClick={() => setEditable(true) }>
               <img src="/images/edit-icon.png" alt='edit'/>EDIT NAME</button>
             <button className="transparent-btn action-btn" onClick={() => deleteCompany() }>

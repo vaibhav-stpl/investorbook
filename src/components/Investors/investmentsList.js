@@ -1,25 +1,31 @@
-import React from 'react'
+import React ,{ useEffect }from 'react'
 import { useQuery } from '@apollo/client';
 import { withRouter } from "react-router";
 import PropTypes from 'prop-types';
 import { GET_INVESTMENTS_BY_INVESTOR } from './constants'
 import Loader from  '../../helpers/loader'
 const InvestmentsList = (props) =>{
-    const { id , onEdit, onDelete  } = props
+    const { id , onEdit, onDelete, setTotalAmount  } = props
     const { loading, error, data } = useQuery(GET_INVESTMENTS_BY_INVESTOR, {
         variables: { investor_id: id },
         fetchPolicy: "cache-and-network" 
       });
+
+    useEffect(() => {
+      if(data){
+        const totalAmount =data?.investment?.reduce(function(tot, arr) { 
+          return tot + arr.amount;
+        },0);
+        setTotalAmount(totalAmount)
+      }
+    },[data ,setTotalAmount])
     if (loading) return <Loader />;
     if (error) return <p>Error :(</p>;
     if (data?.investment?.length === 0) return <p>The database is empty!</p>
-    const totalAmount =data?.investment?.reduce(function(tot, arr) { 
-      return tot + arr.amount;
-    },0);
+    
   
   return(
       <React.Fragment>
-           <p>Total amount intersted {totalAmount}</p>
     <table className='investor-table table' >
     <thead>
       <tr>
@@ -58,6 +64,7 @@ const InvestmentsList = (props) =>{
 InvestmentsList.propTypes = {
   id:  PropTypes.number,
   onEdit: PropTypes.func,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  setTotalAmount: PropTypes.func
 };
 export default withRouter(InvestmentsList);

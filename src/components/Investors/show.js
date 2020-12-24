@@ -7,13 +7,14 @@ import Select from "react-dropdown-select";
 import { toast } from "react-toastify";
 import {GET_INVESTMENTS_BY_INVESTOR, ADD_INVESTMENT,UPDATE_INVESTMENT,GET_INVESTOR , UPDATE_INVESTOR ,DELETE_INVESTMENT, DELETE_INVESTOR} from './constants'
 import Loader from '../../helpers/loader'
-
+import { numberWithCommas } from '../../helpers'
 const Investor = (props) =>{
     const [openModal, setOpenModal] = useState(false)
     const [ companyId, setCompany] = useState(null)
     const [ amount, setAmount] = useState(null)
     const [editData, setEditData ] = useState({})
     const [editable, setEditable ] = useState(false)
+    const [ totalAmount , setTotalAmount ] =  useState(0)
     const id =  props.history.location.pathname.split('/')[2]
 
     const [insert_investment_one, addInvestment ] = useMutation(ADD_INVESTMENT,{
@@ -121,25 +122,36 @@ const Investor = (props) =>{
       toast.error(error.message, 'Error')
     })
   }
-   debugger
   const options = data.company.map((item) => ({label: item.name, value: item.id}))
   return(
     <div className="main-wrapper">
 
           <div className="container">
         <div className='heading'>
-        <button className="transparent-btn heading-btn" onClick={ () => props.history.push('/')} > 
-        <img src="/images/back.png" alt='back'/> </button>
-          <p className="heading-name">
+          <div className='col-md-8 heading-action'>
+          <button className="transparent-btn heading-btn" onClick={ () => props.history.push('/')} > 
+          <img src="/images/back.png" alt='back'/> </button>
+          <p className="heading-name row">
+            <div className='investor-image'>
             <img className="round heading-image" src={data.investor_by_pk.photo_thumbnail} alt={data.investor_by_pk.id} /> 
+            </div>
+            <div className='col-md-10'>
           {
             editable ? 
             <React.Fragment>
               <input className="form-input heading-input" type='text' ref={investor_name} name='investor' defaultValue={ data.investor_by_pk.name } />
               <button className="btn-theme update-button" onClick={updateInvestor} >update</button>
             </React.Fragment> :
-          data.investor_by_pk.name}</p>
-          <div className='investor-action'>
+          data.investor_by_pk.name}
+          
+           <br/><span>Total Amount Invested: ${numberWithCommas(totalAmount)}</span>
+           </div>
+          </p>
+         
+          </div>
+         
+          <div className='investor-action pull-right col-md-4'>
+            
             <button className="transparent-btn action-btn" onClick={() => setEditable(true) }>
             <img src="/images/edit-icon.png" alt='edit' />EDIT NAME</button>
             <button className="transparent-btn action-btn" onClick={() => deleteInvestor() }>
@@ -154,7 +166,8 @@ const Investor = (props) =>{
           id={data.investor_by_pk.id} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
-          addInvestment={addInvestment}          
+          addInvestment={addInvestment} 
+          setTotalAmount={ setTotalAmount }         
         />
         <Modal
           show={openModal}
