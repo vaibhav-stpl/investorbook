@@ -185,5 +185,7 @@ input:focus{
 .modal-body{
     padding:0 33px 18px !important;    
 }
-
+.close{
+    outline: none;
+}
 

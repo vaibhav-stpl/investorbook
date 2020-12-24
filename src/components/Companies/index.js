@@ -80,16 +80,16 @@ const Companies = (props) =>{
         onHide={closeModalFun}
       >
           <Modal.Header closeButton>
-          <Modal.Title></Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            
           <span>{addCompany.error?.message}</span>
-          <div>
+          <Modal.Title>
               <h4>Add Company</h4>
-              <h4>Please enter details of the company</h4>
+              <p>Please enter details of the company</p>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>  
+          <div>
               <form onSubmit={handleSubmit}>
-                  <input type='text' name='name' onChange={(event) => handleChange(event)} placeholder='name' /><br/>
+                  <input className="form-input" type='text' name='name' onChange={(event) => handleChange(event)} placeholder='name' /><br/>
                   <input className="btn-transparent" type='button' onClick={closeModalFun} value='cancel'/>
                   <input className="btn-theme" type='submit' value='submit'/>
               </form>
