@@ -13,12 +13,10 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <React.StrictMode>
     <ApolloProvider client={client}>
       <ToastContainer />
       <App />
-    </ApolloProvider>
-  </React.StrictMode>,
+    </ApolloProvider>,
   document.getElementById("root")
 );
 

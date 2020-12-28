@@ -14,7 +14,7 @@ const Home = () => {
         id="controlled-tab-example"
         activeKey={key}
         onSelect={(k) => setKey(k)}
-        class="tab-header"
+        className="tab-header"
       >
         <Tab eventKey="investors" title="Investors">
           {key === 'investors' &&  <Investors /> }

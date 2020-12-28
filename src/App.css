@@ -47,17 +47,26 @@
 h3 span{
   color: rgb(54, 130, 201);
 }
-.nav-link.active{
+.tab-header.nav-tabs .nav-link.active{
   color: black;
+  border:none;
   border-bottom:3px solid black;
 }
 
-.nav-link:hover {
+.tab-header.nav-tabs .nav-link.active:hover {
   color: black;
+  border: none;
+  border-bottom:3px solid black;
 }
-.nav-link {
+.tab-header.nav-tabs .nav-link {
   color: #A0A0A0;
   padding: 12px;
+  border-bottom:1px solid black;
+}
+.tab-header.nav-tabs .nav-link:hover {
+  color: #A0A0A0;
+  padding: 12px;
+  border-bottom:1px solid black;
 }
 
 #overlay{
