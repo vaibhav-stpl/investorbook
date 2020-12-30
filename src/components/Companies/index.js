@@ -78,7 +78,7 @@ const Companies = (props) =>{
         <Pagination
           activePage={activePage}
           itemsCountPerPage={limit}
-          totalItemsCount={(data?.company_aggregate?.aggregate?.count || sdata?.company_aggregate?.aggregate?.count)}
+          totalItemsCount={(data?.company_aggregate?.aggregate?.count || sdata?.company_aggregate?.aggregate?.count || 0)}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
         />

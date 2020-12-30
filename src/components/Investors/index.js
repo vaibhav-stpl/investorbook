@@ -81,7 +81,7 @@ const Investors = (props) =>{
         <Pagination
           activePage={activePage}
           itemsCountPerPage={limit}
-          totalItemsCount={(data?.investor_aggregate?.aggregate?.count || sdata?.investor_aggregate?.aggregate?.count)}
+          totalItemsCount={(data?.investor_aggregate?.aggregate?.count || sdata?.investor_aggregate?.aggregate?.count || 0)}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
         /> 
