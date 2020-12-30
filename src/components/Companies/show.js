@@ -146,6 +146,7 @@ const Company = (props) => {
   return (
     <div className="main-wrapper">
       <div className="container">
+      <h3 className="logo"><span>Investor</span>Book</h3>
         <div className="heading">
           <button
             className="transparent-btn heading-btn"
@@ -192,7 +193,7 @@ const Company = (props) => {
           </div>
         </div>
         <div className="title-wrapper">
-          <p className="title">Investment</p>
+          <p className="title">Investors</p>
           <button className="btn-transparent" onClick={openModalFun}>
             + Add Investors
           </button>

@@ -127,6 +127,7 @@ const Investor = (props) =>{
     <div className="main-wrapper">
 
           <div className="container">
+          <h3 className="logo"><span>Investor</span>Book</h3>
         <div className='heading'>
           <div className='heading-action'>
           <button className="transparent-btn heading-btn" onClick={ () => props.history.push('/')} > 
@@ -158,7 +159,7 @@ const Investor = (props) =>{
           </div>
         </div>
         <div className="title-wrapper">
-        <p className="title">Investment</p>
+        <p className="title">Investments</p>
         <button className="btn-transparent" onClick={openModalFun}>+ Add Investments</button>
         </div>
         <InvestmentsList 

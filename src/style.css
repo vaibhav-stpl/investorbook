@@ -254,7 +254,7 @@ button:focus{
 .investor-action {
     align-self: center;
     margin-left: auto;
-    width: 395px;
+    /* width: 395px; */
     max-width: 100%;
     display: flex;
 }
@@ -270,6 +270,7 @@ button:focus{
     display: flex;
     align-items: center;
     margin-right: 23px;
+    white-space: nowrap;
 }
 .action-right{
     margin-left: auto;
@@ -331,4 +332,65 @@ button:focus{
     font-weight: 500;
     font-size: 15px;
     line-height: 14px;
+}
+/* responsive */
+@media (max-width: 767px){
+    .main-wrapper{
+        padding: 30px 15px;
+    }
+    .search-wrap{
+        width:100%;
+        margin-top: 20px;
+        border-bottom: 1px solid #eee;
+    }
+    .list{
+        overflow-x:auto;
+    }
+    .investor-action{
+        width: 100%;
+        margin-top: 30px;
+    }
+    .btn-transparent{
+        margin-right: 0;
+    }
+    .action-right{
+        display: flex;
+    }
+    .investor-detail {
+        padding-right: 0 !important;
+        font-size: 20px;
+    }    
+    .sub-title {
+        font-size: 12px;
+    }
+    .search-investor{
+        margin-top: 20px;
+    }
+    table.investor-table.table,
+    tbody,
+    .table-row  {
+    display: block;
+    }
+
+    thead {
+    display: none;
+    }
+    .heading{
+        flex-wrap: wrap;
+    }
+    .heading p {
+        width: 87%;
+        flex-wrap: wrap;
+    }
+    .heading p input,
+    .heading-input{
+        width:100%;
+        margin-bottom: 10px;
+    }
+    table .table-row:first-child {
+        border-top: 0;
+    }
+    .table-name {
+        font-weight: 800;
+    }
 }
