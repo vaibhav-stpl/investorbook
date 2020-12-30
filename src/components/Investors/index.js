@@ -4,9 +4,9 @@ import InvestorsList from './list'
 import Pagination from "react-js-pagination";
 import { Modal } from 'react-bootstrap'
 import { toast } from "react-toastify";
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { ADD_INVESTOR } from './constants'
-import { GET_INVESTORS } from './constants'
+import { GET_INVESTORS, GET_FILTERS } from './constants'
 
 
 const Investors = (props) =>{
@@ -23,13 +23,19 @@ const Investors = (props) =>{
     ]
   });
 
+  const { loading, error, data } = useQuery(GET_INVESTORS,{ skip: searchFilter!=='' ,variables: {offset: offset, limit: limit}});
+  const { loading: sloading, error: serror, data: sdata } = useQuery(GET_FILTERS,{skip: searchFilter==='',variables: {offset: offset, limit: limit,search: searchFilter+'%'}});
+
+
 
   const search_filter = useRef();
  
-  const handlePageChange = ( page) => {
-    setActivePage(page)
-    const offest = page === '1' ? 0 : parseInt((page-1)+"1")
-    setOffset(offest)
+  const handlePageChange = (page) => {
+    if(activePage !== page ){
+      setActivePage(page)
+      const offest = page === 1 ? 0 : (page-1)*limit
+      setOffset(offest)
+    }
   }
   const openModalFun = () => {
     setOpenModal(true)
@@ -39,6 +45,8 @@ const Investors = (props) =>{
   }
   const handleFilter = (event) => {
     setSearchFilter(search_filter.current.value)
+    setActivePage(1)
+    setOffset(0)
   }
   const handleChange = (event) => {
     formData[event.target.name] = event.target.value;
@@ -64,17 +72,20 @@ const Investors = (props) =>{
         </div>
         </div>
         <div className='list'>
-          <InvestorsList limit={ limit } offset={ offset } searchFilter={searchFilter} />
+          <InvestorsList 
+            loading={loading || sloading } 
+            error={error || serror}
+            data={data || sdata }
+          />
         </div>
-        {
-          searchFilter !=='' ? null : <Pagination
+        <Pagination
           activePage={activePage}
           itemsCountPerPage={limit}
-          totalItemsCount={400}
+          totalItemsCount={(data?.investor_aggregate?.aggregate?.count || sdata?.investor_aggregate?.aggregate?.count)}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
         /> 
-      }
+      
 
     <Modal
         show={openModal}

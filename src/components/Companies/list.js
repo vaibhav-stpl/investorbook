@@ -1,25 +1,21 @@
 import React , {useState, useEffect} from 'react'
-import { useQuery } from '@apollo/client';
 import Investors from './getInvestors'
 import PropTypes from 'prop-types';
-import { GET_COMPANIES , GET_FILTERS} from './constants'
 import { withRouter } from "react-router";
 import Loader from '../../helpers/loader'
 
 const CompaniesList = (props) =>{
-  const {offset, limit,searchFilter } = props
-  const { loading, error, data } = useQuery(GET_COMPANIES,{ skip: searchFilter!=='' ,variables: {offset: offset, limit: limit}});
-  const { loading: sloading, error: serror, data: sdata } = useQuery(GET_FILTERS,{skip: searchFilter==='',variables: {search: searchFilter}});
+  const {loading, error,data } = props
   const [companies, setCompanies ] = useState([])
   useEffect(() => {
-    if (data || sdata) {
-      setCompanies(data?.company || sdata?.company)
+    if (data) {
+      setCompanies(data?.company)
     }
-  },[data, sdata])
+  },[data])
 
 
-  if (loading || sloading) return <Loader />;
-  if (error || serror) return <p>Error :(</p>;
+  if (loading) return <Loader />;
+  if (error) return <p>Error :(</p>;
   if (companies?.length === 0) return <p>The database is empty!</p>
 
   return(
@@ -51,9 +47,9 @@ const CompaniesList = (props) =>{
   
 }
 CompaniesList.propTypes = {
-  offset: PropTypes.number,
-  limit: PropTypes.number,
-  searchFilter: PropTypes.string
+  loading: PropTypes.bool,
+  error: PropTypes.string,
+  data: PropTypes.any,
 
 };
 

@@ -3,10 +3,11 @@ import { withRouter } from "react-router";
 import CompaniesList from './list'
 import Pagination from "react-js-pagination";
 import { toast } from 'react-toastify';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Modal } from 'react-bootstrap'
 import { ADD_COMPANY } from './constants'
-import { GET_COMPANIES } from './constants'
+import { GET_COMPANIES, GET_FILTERS } from './constants'
+
 
 const Companies = (props) =>{
   const [activePage, setActivePage ] = useState(1)
@@ -21,15 +22,21 @@ const Companies = (props) =>{
       { query: GET_COMPANIES, variables: {offset: offset, limit: limit} }
     ]
   });
+  const { loading, error, data } = useQuery(GET_COMPANIES,{ skip: searchFilter!=='' ,variables: {offset: offset, limit: limit}});
+  const { loading: sloading, error: serror, data: sdata } = useQuery(GET_FILTERS,{skip: searchFilter==='',variables: {offset: offset, limit: limit,search: searchFilter+'%'}});
+  
 
-
-  const handlePageChange = ( page) => {
-    setActivePage(page)
-    const offest = page === '1' ? 0 : parseInt((page-1)+"1")
-    setOffset(offest)
+  const handlePageChange = (page) => {
+    if(activePage !== page ){
+      setActivePage(page)
+      const offest = page === 1 ? 0 : (page-1)*limit
+      setOffset(offest)
+    }
   }
   const handleFilter = (event) => {
     setSearchFilter(search_filter.current.value)
+    setActivePage(1)
+    setOffset(0)
   }
 
   const openModalFun = () => {
@@ -62,22 +69,24 @@ const Companies = (props) =>{
        </div>
        </div>
        <div className='list'>
-          <CompaniesList limit={ limit } offset={ offset } searchFilter={searchFilter}  />
+          <CompaniesList 
+            loading={loading || sloading } 
+            error={error || serror}
+            data={data || sdata }
+          />
         </div>
-        {
-          searchFilter !=='' ? null : <Pagination
+        <Pagination
           activePage={activePage}
           itemsCountPerPage={limit}
-          totalItemsCount={400}
+          totalItemsCount={(data?.company_aggregate?.aggregate?.count || sdata?.company_aggregate?.aggregate?.count)}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
-          /> 
-        }
+        />
 
-<Modal
-        show={openModal}
-        onHide={closeModalFun}
-      >
+          <Modal
+            show={openModal}
+            onHide={closeModalFun}
+          >
           <Modal.Header closeButton>
           <span>{addCompany.error?.message}</span>
           <Modal.Title>

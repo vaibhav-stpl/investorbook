@@ -29,15 +29,25 @@ export const GET_INVESTORS = gql`
           photo_large
           photo_thumbnail
       }
+      investor_aggregate {
+        aggregate {
+          count
+        }
+      }
   }
 `;
 export const GET_FILTERS = gql`
-  query GetInvestors($search: String!) {
-      investor(where: {name: {_like: $search}}, order_by: {created_at: asc}) {
+  query GetInvestors($search: String!,$offset: Int!, $limit: Int!) {
+      investor(limit: $limit, offset: $offset,where: {name: {_ilike: $search}}, order_by: {created_at: asc}) {
           id
           name
           photo_large
           photo_thumbnail
+      }
+      investor_aggregate(where: {name: {_ilike: $search}}) {
+        aggregate {
+          count
+        }
       }
   }
 `;

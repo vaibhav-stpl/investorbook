@@ -27,13 +27,23 @@ export const GET_COMPANIES = gql`
           id
           name
       }
+      company_aggregate {
+        aggregate {
+          count
+        }
+      }
   }
 `;
 export const GET_FILTERS = gql`
-  query GetCompanies($search: String!) {
-      company(where: {name: {_like: $search}},limit: 10, order_by: {created_at: asc}) {
+  query GetCompanies($search: String!,$offset: Int!, $limit: Int!) {
+      company(where: {name: {_ilike: $search}},limit: 10, offset: $offset, order_by: {created_at: asc}) {
           id
           name
+      }
+      company_aggregate(where: {name: {_ilike: $search}}) {
+        aggregate {
+          count
+        }
       }
   }
 `;

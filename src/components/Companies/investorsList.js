@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import PropTypes from 'prop-types';
 import { GET_INVESTORS_BY_COMPANY } from './constants'
 import Loader from '../../helpers/loader'
+import { numberWithCommas } from '../../helpers'
 
 const InvestorsList = (props) =>{
     const { id , onEdit, onDelete } = props
@@ -35,7 +36,7 @@ const InvestorsList = (props) =>{
 
         <tr className="table-row" key={item.id}>
         <td>{item.investor.name}</td>
-        <td>{item.amount}</td>
+        <td>${numberWithCommas(item.amount)}</td>
         <td className="action-right"> 
           <button className="transparent-btn mr-20" onClick={() => onEdit(item)}>
             <img src="/images/edit-icon.png" alt='edit' />

@@ -4,6 +4,8 @@ import { withRouter } from "react-router";
 import PropTypes from 'prop-types';
 import { GET_INVESTMENTS_BY_INVESTOR } from './constants'
 import Loader from  '../../helpers/loader'
+import { numberWithCommas } from '../../helpers'
+
 const InvestmentsList = (props) =>{
     const { id , onEdit, onDelete, setTotalAmount  } = props
     const { loading, error, data } = useQuery(GET_INVESTMENTS_BY_INVESTOR, {
@@ -43,7 +45,7 @@ const InvestmentsList = (props) =>{
 
         <tr className="table-row" key={item.id}>
         <td>{item.company.name}</td>
-        <td>{item.amount}</td>
+        <td>${numberWithCommas(item.amount)}</td>
         <td className="action-right"> 
           <button className="transparent-btn mr-20" onClick={() => onEdit(item)}>
           <img src="/images/edit-icon.png" alt='edit' />

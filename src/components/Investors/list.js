@@ -1,28 +1,24 @@
 import React , { useEffect , useState}from 'react'
-import { useQuery } from '@apollo/client';
 import Investments from './getInvestments'
 import { withRouter } from "react-router";
 import PropTypes from 'prop-types';
-import { GET_INVESTORS,GET_FILTERS } from './constants'
 import Loader from '../../helpers/loader'
 
 // Example of a component that uses apollo-client to fetch data.
 
 
 const InvestorsList = (props) =>{
-  const {offset, limit,searchFilter } = props
-  const { loading, error, data } = useQuery(GET_INVESTORS,{ skip: searchFilter!=='' ,variables: {offset: offset, limit: limit}});
-  const { loading: sloading, error: serror, data: sdata } = useQuery(GET_FILTERS,{skip: searchFilter==='',variables: {search: searchFilter}});
+  const {loading,error ,data } = props
   const [investors, setInvestors ] = useState([])
   useEffect(() => {
-    if (data || sdata) {
-      setInvestors(data?.investor || sdata?.investor)
+    if (data) {
+      setInvestors(data?.investor)
     }
-  },[data, sdata])
+  },[data])
 
 
-  if (loading || sloading) return <Loader />;
-  if (error || serror) return <p>Error :(</p>;
+  if (loading) return <Loader />;
+  if (error) return <p>Error :(</p>;
   if (investors.length === 0) return <p>The database is empty!</p>
   
 
@@ -59,9 +55,9 @@ const InvestorsList = (props) =>{
   
 }
 InvestorsList.propTypes = {
-  offset: PropTypes.number,
-  limit: PropTypes.number,
-  searchFilter: PropTypes.string,
+  loading: PropTypes.bool,
+  error: PropTypes.string,
+  data: PropTypes.any,
   id: PropTypes.number
 
 };
