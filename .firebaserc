@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "investorbook",
+    "investor-book": "investorbook"
+  }
+}
